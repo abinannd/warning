@@ -1,0 +1,105 @@
+{
+    "overall_statistics": {
+        "total_events": 16,
+        "average_lead_time": 0.94,
+        "median_lead_time": 1.0,
+        "min_lead_time": 0,
+        "max_lead_time": 2,
+        "std_deviation": 0.68
+    },
+    "distribution": {
+        "No Early Warning": 4,
+        "Short Warning": 12,
+        "Moderate Warning": 0,
+        "Long Warning": 0
+    },
+    "district_statistics": [
+        {
+            "District": "Kannur",
+            "Events": 7,
+            "Average Lead Time": 0.86,
+            "Max Lead Time": 2
+        },
+        {
+            "District": "Kasaragod",
+            "Events": 2,
+            "Average Lead Time": 1.0,
+            "Max Lead Time": 1
+        },
+        {
+            "District": "Kozhikode",
+            "Events": 1,
+            "Average Lead Time": 1.0,
+            "Max Lead Time": 1
+        },
+        {
+            "District": "Malappuram",
+            "Events": 2,
+            "Average Lead Time": 0.5,
+            "Max Lead Time": 1
+        },
+        {
+            "District": "Palakkad",
+            "Events": 2,
+            "Average Lead Time": 1.0,
+            "Max Lead Time": 1
+        },
+        {
+            "District": "Wayanad",
+            "Events": 2,
+            "Average Lead Time": 1.5,
+            "Max Lead Time": 2
+        }
+    ],
+    "disease_statistics": [
+        {
+            "Disease": "Chickenpox",
+            "Events": 2,
+            "Average Lead Time": 0.5,
+            "Max Lead Time": 1
+        },
+        {
+            "Disease": "Chikungunya",
+            "Events": 1,
+            "Average Lead Time": 1.0,
+            "Max Lead Time": 1
+        },
+        {
+            "Disease": "Common Cold",
+            "Events": 2,
+            "Average Lead Time": 0.0,
+            "Max Lead Time": 0
+        },
+        {
+            "Disease": "Flu",
+            "Events": 3,
+            "Average Lead Time": 1.33,
+            "Max Lead Time": 2
+        },
+        {
+            "Disease": "Malaria",
+            "Events": 4,
+            "Average Lead Time": 1.25,
+            "Max Lead Time": 2
+        },
+        {
+            "Disease": "Typhoid",
+            "Events": 1,
+            "Average Lead Time": 1.0,
+            "Max Lead Time": 1
+        },
+        {
+            "Disease": "Viral Fever",
+            "Events": 3,
+            "Average Lead Time": 1.0,
+            "Max Lead Time": 2
+        }
+    ],
+    "verification_results": {
+        "every_event_has_one_detection_date": true,
+        "every_event_has_one_peak_date": true,
+        "peak_not_before_detection": true,
+        "lead_time_never_negative": true,
+        "every_event_appears_exactly_once": true
+    }
+}

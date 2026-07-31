@@ -1,0 +1,5 @@
+Event ID,District,Disease,Start Date,End Date,Duration,Peak Cases,Peak Z-score,Highest Risk,Medium Days,High Days,Critical Days
+EVT-0001,Kannur,Viral Fever,2025-04-10,2025-04-11,2,2,2.093472449523185,Medium,2,0,0
+EVT-0002,Palakkad,Chikungunya,2025-06-05,2025-06-09,5,2,2.9472689999087405,High,4,1,0
+EVT-0003,Palakkad,Chikungunya,2025-12-12,2025-12-18,7,3,2.947268999908739,High,2,5,0
+EVT-0004,Wayanad,Common Cold,2025-02-06,2025-02-07,2,2,2.164808203472802,Medium,2,0,0

@@ -95,3 +95,77 @@ Following the initial run, a critical statistical issue was identified where nea
 | Max Z-score     |                              5.29 |                               3.87 |
 
 This dramatically reduced noise, transforming the alert volume to highlight only sustained, credible epidemiological threats.
+
+
+---
+
+## 12. Gap-Corrected Baseline (Stage 3.3)
+
+### System Description
+
+> A regional early warning system that analyzes the most recent week's surveillance data against a historical baseline (ending 7 days prior) to identify statistically significant increases in disease activity and issue risk-based alerts to public health authorities.
+
+### Problem: Baseline Contamination
+
+The original rolling baseline (Stages 2.1–2.4) used a 30-day window ending on day T, meaning the most recent 7 days of case data — the very window being tested for elevated activity — were also included in the baseline computation. This causes the baseline mean and std to track the current outbreak, inflating the denominator exactly when the Z-score needs to be highest, and suppressing genuine alerts.
+
+### Fix: 7-Day Gap Between Baseline and Signal Window
+
+| Window | Dates Used | Computation |
+|--------|-----------|-------------|
+| Historical Baseline | [T-37, T-8] (30 days) | `rolling(30).mean/std.shift(8)` |
+| Recent Trend Signal | [T-6, T] (7 days) | `rolling(7).mean()` |
+| Z-score | — | `(recent_mean - baseline_mean) / max(baseline_std, 1e-6)` |
+| EWMA | Up to T-8 | `ewm(span=14).mean().shift(8)` |
+
+### Before vs After Comparison
+
+| Metric          |   Old (Contaminated Baseline) |   New (Gap-Corrected Baseline) |
+|-----------------|-------------------------------|--------------------------------|
+| Total Events    |                         16    |                            5   |
+| Critical Events |                         16    |                            1   |
+| High Events     |                          0    |                            2   |
+| Medium Events   |                          0    |                            2   |
+| Avg Duration    |                          2.19 |                            4.8 |
+| Max Z-score     |                          5.29 |                       285714   |
+
+### Interpretation
+
+The gap-corrected baseline separates the 'what the system is testing' window from the 'what the system learned from' window. This is the correct statistical design for a surveillance system where the signal of interest should not contaminate the reference distribution used to judge it.
+
+
+---
+
+## 12. Gap-Corrected Baseline (Stage 3.3)
+
+### System Description
+
+> A regional early warning system that analyzes the most recent week's surveillance data against a historical baseline (ending 7 days prior) to identify statistically significant increases in disease activity and issue risk-based alerts to public health authorities.
+
+### Problem: Baseline Contamination
+
+The original rolling baseline (Stages 2.1–2.4) used a 30-day window ending on day T, meaning the most recent 7 days of case data — the very window being tested for elevated activity — were also included in the baseline computation. This causes the baseline mean and std to track the current outbreak, inflating the denominator exactly when the Z-score needs to be highest, and suppressing genuine alerts.
+
+### Fix: 7-Day Gap Between Baseline and Signal Window
+
+| Window | Dates Used | Computation |
+|--------|-----------|-------------|
+| Historical Baseline | [T-37, T-8] (30 days) | `rolling(30).mean/std.shift(8)` |
+| Recent Trend Signal | [T-6, T] (7 days) | `rolling(7).mean()` |
+| Z-score | — | `(recent_mean - baseline_mean) / max(baseline_std, 1e-6)` |
+| EWMA | Up to T-8 | `ewm(span=14).mean().shift(8)` |
+
+### Before vs After Comparison
+
+| Metric          |   Old (Contaminated Baseline) |   New (Gap-Corrected Baseline) |
+|-----------------|-------------------------------|--------------------------------|
+| Total Events    |                         16    |                           4    |
+| Critical Events |                         16    |                           0    |
+| High Events     |                          0    |                           2    |
+| Medium Events   |                          0    |                           2    |
+| Avg Duration    |                          2.19 |                           4    |
+| Max Z-score     |                          5.29 |                           2.95 |
+
+### Interpretation
+
+The gap-corrected baseline separates the 'what the system is testing' window from the 'what the system learned from' window. This is the correct statistical design for a surveillance system where the signal of interest should not contaminate the reference distribution used to judge it.

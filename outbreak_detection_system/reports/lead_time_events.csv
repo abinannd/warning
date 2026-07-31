@@ -1,0 +1,17 @@
+Event ID,District,Disease,Detection Date,Peak Date,Lead Time,Category,Peak Cases,Peak Z-score,Highest Risk
+EVT-0001,Kannur,Chickenpox,2025-07-26,2025-07-26,0,No Early Warning,2,3.1086,Critical
+EVT-0002,Kannur,Common Cold,2025-05-24,2025-05-24,0,No Early Warning,2,4.2994,Critical
+EVT-0003,Kannur,Malaria,2025-06-10,2025-06-12,2,Short Warning,2,3.7172,Critical
+EVT-0004,Kannur,Typhoid,2025-05-25,2025-05-26,1,Short Warning,2,3.5052,Critical
+EVT-0005,Kannur,Viral Fever,2025-01-13,2025-01-13,0,No Early Warning,2,4.2994,Critical
+EVT-0006,Kannur,Viral Fever,2025-04-08,2025-04-10,2,Short Warning,2,3.5052,Critical
+EVT-0007,Kannur,Viral Fever,2025-11-04,2025-11-05,1,Short Warning,2,3.9757,Critical
+EVT-0008,Kasaragod,Flu,2025-11-24,2025-11-25,1,Short Warning,2,3.7172,Critical
+EVT-0009,Kasaragod,Malaria,2025-04-04,2025-04-05,1,Short Warning,2,3.7172,Critical
+EVT-0010,Kozhikode,Chikungunya,2025-08-27,2025-08-28,1,Short Warning,2,3.5052,Critical
+EVT-0011,Malappuram,Common Cold,2025-07-16,2025-07-16,0,No Early Warning,2,5.2947,Critical
+EVT-0012,Malappuram,Malaria,2025-04-12,2025-04-13,1,Short Warning,2,3.5052,Critical
+EVT-0013,Palakkad,Chickenpox,2025-02-25,2025-02-26,1,Short Warning,2,3.9757,Critical
+EVT-0014,Palakkad,Flu,2025-06-16,2025-06-17,1,Short Warning,2,3.9757,Critical
+EVT-0015,Wayanad,Flu,2025-06-12,2025-06-14,2,Short Warning,2,4.2994,Critical
+EVT-0016,Wayanad,Malaria,2025-04-13,2025-04-14,1,Short Warning,3,4.5882,Critical
