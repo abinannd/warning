@@ -175,11 +175,16 @@
 
             const marker = L.circleMarker(coords, markerOptions).addTo(map);
             
+            let triggerText = '';
+            if(dData.disease !== '-') {
+                triggerText = `Trigger: ${dData.disease}<br/>`;
+            }
+
             const popupContent = `
                 <div class="text-sm font-sans p-1 min-w-[150px]">
                     <strong class="text-base">${dist}</strong><br/>
                     <span class="font-bold" style="color: ${colorHex}">${dData.status}</span><br/>
-                    ${dData.disease !== '-' ? `Trigger: ${dData.disease}<br/>` : ''}
+                    ${triggerText}
                     <hr class="my-2"/>
                     <em>${dData.recommendation}</em>
                 </div>
@@ -195,10 +200,12 @@
             markers[dist] = marker;
         });
         
-        // Open popup for currently selected district
-        if(markers[currentDistrict]) {
-            markers[currentDistrict].openPopup();
-        }
+        // Open popup for currently selected district after a short delay to let map render
+        setTimeout(() => {
+            if(markers[currentDistrict]) {
+                markers[currentDistrict].openPopup();
+            }
+        }, 100);
     }
 
     function renderDetail() {
