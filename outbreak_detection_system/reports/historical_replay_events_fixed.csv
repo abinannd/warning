@@ -1,0 +1,5 @@
+Event ID,District,Disease,Start Date,End Date,Duration,Peak Cases,Peak Z-score,Highest Risk,Medium Days,High Days,Critical Days
+EVT-0001,Kannur,Chickenpox,2025-07-26,2025-07-27,2,2,3.108573076472143,Critical,0,1,1
+EVT-0002,Kannur,Common Cold,2025-05-24,2025-05-25,2,2,3.7333333333333334,Critical,0,0,2
+EVT-0003,Kannur,Viral Fever,2025-01-13,2025-01-14,2,2,3.7333333333333334,Critical,0,0,2
+EVT-0004,Malappuram,Common Cold,2025-07-16,2025-07-17,2,2,3.8666666666666667,Critical,0,0,2

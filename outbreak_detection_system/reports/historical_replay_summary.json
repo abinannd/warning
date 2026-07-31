@@ -1,0 +1,23 @@
+{
+    "replay_statistics": {
+        "total_events": 1192,
+        "medium_events": 283,
+        "high_events": 570,
+        "critical_events": 339,
+        "average_duration": 1.1073825503355705,
+        "longest_event": 3,
+        "shortest_event": 1,
+        "maximum_z_score": 5.294651389216635,
+        "average_z_score": 2.9453689926134508,
+        "district_highest_events": "Kasaragod",
+        "disease_highest_events": "Chickenpox",
+        "combo_highest_z_score": "Kozhikode - Common Cold"
+    },
+    "verification_results": {
+        "chronological_processing": true,
+        "no_duplicate_events": true,
+        "every_alert_assigned": true,
+        "valid_start_end_dates": true,
+        "positive_durations": true
+    }
+}
