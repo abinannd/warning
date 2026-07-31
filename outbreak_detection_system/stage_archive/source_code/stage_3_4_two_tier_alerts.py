@@ -1,14 +1,14 @@
 """
 Stage 3.4 - Two-Tier Alerting System
 
-Tier 1 'Confirmed': gap-corrected baseline, min_duration>=2, min_peak_cases>=2
-Tier 2 'Watch':     gap-corrected baseline, min_duration>=2, peak_cases=1
+Tier 1 'Confirmed-Tier Event': gap-corrected baseline, min_duration>=2, min_peak_cases>=2
+Tier 2 'Watch-Tier Event':     gap-corrected baseline, min_duration>=2, peak_cases=1
                     (events that pass duration/gap but fail peak-case filter)
 
 Tiers are mutually exclusive by construction:
   - Run Config A (gap, no peak filter) -> all candidate events
-  - peak_cases >= 2  -> Tier 1 Confirmed
-  - peak_cases == 1  -> Tier 2 Watch
+  - peak_cases >= 2  -> Tier 1 Confirmed-Tier Event
+  - peak_cases == 1  -> Tier 2 Watch-Tier Event
 
 Saves: reports/two_tier_alerts_2025.csv
 Updates: reports/historical_replay_report.md (new section)
@@ -147,20 +147,20 @@ print(f"  Total candidate events (min_dur>=2, no peak filter): {len(ev_df)}")
 # --------------------------------------------------------------------------
 # 5. Assign tiers — mutually exclusive by peak_cases
 # --------------------------------------------------------------------------
-ev_df['Tier']  = ev_df['Peak Cases'].apply(lambda x: 'Confirmed' if x >= 2 else 'Watch')
+ev_df['Tier']  = ev_df['Peak Cases'].apply(lambda x: 'Confirmed-Tier Event' if x >= 2 else 'Watch-Tier Event')
 # Watch events: label as Watch, no severity classification needed
 ev_df['Alert Label'] = ev_df.apply(
-    lambda r: r['Highest Risk'] if r['Tier'] == 'Confirmed' else 'Watch', axis=1
+    lambda r: r['Highest Risk'] if r['Tier'] == 'Confirmed-Tier Event' else 'Watch-Tier Event', axis=1
 )
 
 # --------------------------------------------------------------------------
 # 6. Console summary
 # --------------------------------------------------------------------------
-confirmed = ev_df[ev_df['Tier'] == 'Confirmed']
-watch     = ev_df[ev_df['Tier'] == 'Watch']
+confirmed = ev_df[ev_df['Tier'] == 'Confirmed-Tier Event']
+watch     = ev_df[ev_df['Tier'] == 'Watch-Tier Event']
 
-print(f"\n  Tier 1 Confirmed: {len(confirmed)} events")
-print(f"  Tier 2 Watch:     {len(watch)} events")
+print(f"\n  Tier 1 Confirmed-Tier Event: {len(confirmed)} events")
+print(f"  Tier 2 Watch-Tier Event:     {len(watch)} events")
 print(f"  Total:            {len(ev_df)} events")
 print(f"  Tiers mutually exclusive: {set(confirmed['Event ID']) & set(watch['Event ID']) == set()}")
 
@@ -182,13 +182,13 @@ print(tabulate(
 # ---- Tier summary counts ----
 print("\n### Tier Summary")
 tier_summary = [
-    ["Confirmed (Tier 1)", len(confirmed),
+    ["Confirmed-Tier Event (Tier 1)", len(confirmed),
      int((confirmed['Alert Label']=='Critical').sum()),
      int((confirmed['Alert Label']=='High').sum()),
      int((confirmed['Alert Label']=='Medium').sum()),
      round(confirmed['Duration'].mean(), 2) if len(confirmed) else 0,
      round(confirmed['Peak Z'].max(), 3) if len(confirmed) else 0],
-    ["Watch (Tier 2)", len(watch), 0, 0, 0,
+    ["Watch-Tier Event (Tier 2)", len(watch), 0, 0, 0,
      round(watch['Duration'].mean(), 2) if len(watch) else 0,
      round(watch['Peak Z'].max(), 3) if len(watch) else 0],
 ]
@@ -201,8 +201,8 @@ print("\n### District Breakdown")
 dist_tbl = ev_df.groupby(['District', 'Tier']).agg(
     Events=('Event ID', 'count')
 ).unstack(fill_value=0).reset_index()
-dist_tbl.columns = ['District', 'Confirmed', 'Watch']
-dist_tbl['Total'] = dist_tbl['Confirmed'] + dist_tbl['Watch']
+dist_tbl.columns = ['District', 'Confirmed-Tier Event', 'Watch-Tier Event']
+dist_tbl['Total'] = dist_tbl['Confirmed-Tier Event'] + dist_tbl['Watch-Tier Event']
 print(tabulate(dist_tbl, headers='keys', showindex=False, tablefmt="github"))
 
 # ---- Disease breakdown ----
@@ -210,8 +210,8 @@ print("\n### Disease Breakdown")
 dis_tbl = ev_df.groupby(['Disease', 'Tier']).agg(
     Events=('Event ID', 'count')
 ).unstack(fill_value=0).reset_index()
-dis_tbl.columns = ['Disease', 'Confirmed', 'Watch']
-dis_tbl['Total'] = dis_tbl['Confirmed'] + dis_tbl['Watch']
+dis_tbl.columns = ['Disease', 'Confirmed-Tier Event', 'Watch-Tier Event']
+dis_tbl['Total'] = dis_tbl['Confirmed-Tier Event'] + dis_tbl['Watch-Tier Event']
 print(tabulate(dis_tbl, headers='keys', showindex=False, tablefmt="github"))
 
 # --------------------------------------------------------------------------

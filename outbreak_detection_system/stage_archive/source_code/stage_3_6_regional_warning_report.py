@@ -35,10 +35,10 @@ df_week = df[mask].copy()
 # Priorities: Emergency (4) > Watch (3) > Advisory (2) > Normal (1)
 
 def get_status(grp):
-    if (grp['tier'] == 'Confirmed').any():
+    if (grp['tier'] == 'Confirmed-Tier Event').any():
         return 4, 'Emergency Warning'
-    elif (grp['tier'] == 'Watch').any():
-        return 3, 'Watch'
+    elif (grp['tier'] == 'Watch-Tier Event').any():
+        return 3, 'Watch-Status Warning'
     elif (grp['risk_level'] != 'Low').any():
         return 2, 'Advisory'
     else:
@@ -70,7 +70,9 @@ md_lines = []
 md_lines.append(f"# Regional Outbreak Warning Report")
 md_lines.append(f"**Snapshot Window:** {start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}\n")
 
-md_lines.append("> **Note for Demo:** This snapshot was specifically chosen for a week known to contain a Confirmed event (Palakkad–Chikungunya) to demonstrate the multi-tiered alerting behavior: Advisory, Watch, and Emergency Warning.\n")
+md_lines.append("> **Note for Demo:** This snapshot was specifically chosen for a week known to contain a Confirmed-Tier Event (Palakkad–Chikungunya) to demonstrate the multi-tiered alerting behavior: Advisory, Watch-Status Warning, and Emergency Warning.\n")
+
+md_lines.append("> **Note:** This report uses [Watch-Tier Event / Watch-Status Warning] terminology, which is distinct from the other report's equivalent term. **Watch-Tier Event** refers to a year-level statistical classification based on sustained low-peak-case anomalies; **Watch-Status Warning** refers to a real-time weekly risk snapshot based on the highest observed daily risk level.\n")
 
 md_lines.append("## Status Definitions")
 md_lines.append("- **Emergency Warning:** Confirmed sustained anomaly (≥2 days, peak cases ≥2, gap-corrected baseline). Immediate public health intervention recommended.")
@@ -87,12 +89,12 @@ else:
     md_lines.append("No Emergency Warnings for this period.\n")
 
 # Watch
-wa_df = df_display[df_display['Status'] == 'Watch']
-md_lines.append("## ⚠️ Watches")
+wa_df = df_display[df_display['Status'] == 'Watch-Status Warning']
+md_lines.append("## ⚠️ Watch-Status Warnings")
 if not wa_df.empty:
     md_lines.append(tabulate(wa_df, headers='keys', showindex=False, tablefmt='github') + "\n")
 else:
-    md_lines.append("No Watches for this period.\n")
+    md_lines.append("No Watch-Status Warnings for this period.\n")
 
 # Advisory
 ad_df = df_display[df_display['Status'] == 'Advisory']
@@ -111,7 +113,7 @@ print(f"\nGenerated report: {out_file}")
 # Print summary to console
 print("\nSnapshot Summary:")
 print(f"Emergency Warnings: {len(em_df)}")
-print(f"Watches:            {len(wa_df)}")
+print(f"Watch-Status Warnings:            {len(wa_df)}")
 print(f"Advisories:         {len(ad_df)}")
 print("\nEmergency Table:")
 print(tabulate(em_df, headers='keys', showindex=False, tablefmt='github'))

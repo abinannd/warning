@@ -107,7 +107,7 @@ This dramatically reduced noise, transforming the alert volume to highlight only
 
 ### Problem: Baseline Contamination
 
-The original rolling baseline (Stages 2.1�2.4) used a 30-day window ending on day T, meaning the most recent 7 days of case data � the very window being tested for elevated activity � were also included in the baseline computation. This causes the baseline mean and std to track the current outbreak, inflating the denominator exactly when the Z-score needs to be highest, and suppressing genuine alerts.
+The original rolling baseline (Stages 2.12.4) used a 30-day window ending on day T, meaning the most recent 7 days of case data  the very window being tested for elevated activity  were also included in the baseline computation. This causes the baseline mean and std to track the current outbreak, inflating the denominator exactly when the Z-score needs to be highest, and suppressing genuine alerts.
 
 ### Fix: 7-Day Gap Between Baseline and Signal Window
 
@@ -115,7 +115,7 @@ The original rolling baseline (Stages 2.1�2.4) used a 30-day window ending on da
 |--------|-----------|-------------|
 | Historical Baseline | [T-37, T-8] (30 days) | `rolling(30).mean/std.shift(8)` |
 | Recent Trend Signal | [T-6, T] (7 days) | `rolling(7).mean()` |
-| Z-score | � | `(recent_mean - baseline_mean) / max(baseline_std, 1e-6)` |
+| Z-score |  | `(recent_mean - baseline_mean) / max(baseline_std, 1e-6)` |
 | EWMA | Up to T-8 | `ewm(span=14).mean().shift(8)` |
 
 ### Before vs After Comparison
@@ -144,7 +144,7 @@ The gap-corrected baseline separates the 'what the system is testing' window fro
 
 ### Problem: Baseline Contamination
 
-The original rolling baseline (Stages 2.1�2.4) used a 30-day window ending on day T, meaning the most recent 7 days of case data � the very window being tested for elevated activity � were also included in the baseline computation. This causes the baseline mean and std to track the current outbreak, inflating the denominator exactly when the Z-score needs to be highest, and suppressing genuine alerts.
+The original rolling baseline (Stages 2.12.4) used a 30-day window ending on day T, meaning the most recent 7 days of case data  the very window being tested for elevated activity  were also included in the baseline computation. This causes the baseline mean and std to track the current outbreak, inflating the denominator exactly when the Z-score needs to be highest, and suppressing genuine alerts.
 
 ### Fix: 7-Day Gap Between Baseline and Signal Window
 
@@ -152,7 +152,7 @@ The original rolling baseline (Stages 2.1�2.4) used a 30-day window ending on da
 |--------|-----------|-------------|
 | Historical Baseline | [T-37, T-8] (30 days) | `rolling(30).mean/std.shift(8)` |
 | Recent Trend Signal | [T-6, T] (7 days) | `rolling(7).mean()` |
-| Z-score | � | `(recent_mean - baseline_mean) / max(baseline_std, 1e-6)` |
+| Z-score |  | `(recent_mean - baseline_mean) / max(baseline_std, 1e-6)` |
 | EWMA | Up to T-8 | `ewm(span=14).mean().shift(8)` |
 
 ### Before vs After Comparison
@@ -185,14 +185,14 @@ The gap-corrected baseline separates the 'what the system is testing' window fro
 
 ### System Description
 
-> The system uses a two-tier alerting model, mirroring real-world surveillance practice: a sensitive **Watch** tier for early signals worth monitoring, and a high-precision **Confirmed** tier reserved for sustained, statistically robust anomalies (peak cases ≥2, duration ≥2 days, corrected against a gap-separated historical baseline).
+> The system uses a two-tier alerting model, mirroring real-world surveillance practice: a sensitive **Watch-Tier Event** tier for early signals worth monitoring, and a high-precision **Confirmed-Tier Event** tier reserved for sustained, statistically robust anomalies (peak cases â¥2, duration â¥2 days, corrected against a gap-separated historical baseline).
 
 ### Tier Definitions
 
 | Tier | Label | min_duration | min_peak_cases | Baseline | Purpose |
 |------|-------|-------------|----------------|----------|---------|
-| Tier 1 | **Confirmed** | ≥2 days | ≥2 cases | Gap-corrected [T-37, T-8] | High-precision confirmed outbreak alert |
-| Tier 2 | **Watch** | ≥2 days | ≥1 case (any) | Gap-corrected [T-37, T-8] | Sensitive early signal for monitoring |
+| Tier 1 | **Confirmed-Tier Event** | â¥2 days | â¥2 cases | Gap-corrected [T-37, T-8] | High-precision confirmed outbreak alert |
+| Tier 2 | **Watch-Tier Event** | â¥2 days | â¥1 case (any) | Gap-corrected [T-37, T-8] | Sensitive early signal for monitoring |
 
 *Tiers are mutually exclusive: events qualifying for Tier 1 are excluded from Tier 2.*
 
@@ -200,8 +200,8 @@ The gap-corrected baseline separates the 'what the system is testing' window fro
 
 | Tier               |   Events |   Critical |   High |   Medium |   Avg Dur |   Max Z |
 |--------------------|----------|------------|--------|----------|-----------|---------|
-| Confirmed (Tier 1) |        4 |          0 |      2 |        2 |      4    |   2.947 |
-| Watch (Tier 2)     |       25 |          0 |      0 |        0 |      2.84 |   3.116 |
+| Confirmed-Tier Event |        4 |          0 |      2 |        2 |      4    |   2.947 |
+| Watch-Tier Event     |       25 |          0 |      0 |        0 |      2.84 |   3.116 |
 
 ### District Breakdown
 
@@ -229,4 +229,7 @@ The gap-corrected baseline separates the 'what the system is testing' window fro
 
 ### Design Rationale
 
-The two-tier model was motivated by the ablation test (Stage 3.4 diagnostic), which showed that the gap-corrected baseline alone reduces peak_cases=1 artifacts from 101 (contaminated baseline) to 18 — a substantial improvement, but not complete elimination. Rather than discarding these 18 signals entirely, they are preserved as low-confidence Watch-tier alerts, allowing health authorities to apply domain judgment on whether to investigate further.
+The two-tier model was motivated by the ablation test (Stage 3.4 diagnostic), which showed that the gap-corrected baseline alone reduces peak_cases=1 artifacts from 101 (contaminated baseline) to 18 â a substantial improvement, but not complete elimination. Rather than discarding these 18 signals entirely, they are preserved as low-confidence Watch-Tier Event alerts, allowing health authorities to apply domain judgment on whether to investigate further.
+
+
+> **Note:** This report uses [Watch-Tier Event / Watch-Status Warning] terminology, which is distinct from the other report's equivalent term. **Watch-Tier Event** refers to a year-level statistical classification based on sustained low-peak-case anomalies; **Watch-Status Warning** refers to a real-time weekly risk snapshot based on the highest observed daily risk level.

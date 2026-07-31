@@ -122,14 +122,14 @@ if max_z > 4.0:
                     in_event = False
                     dur = len(cur['idxs'])
                     if dur >= MIN_DURATION:
-                        tier_label = 'Confirmed' if cur['Peak Cases'] >= 2 else 'Watch'
+                        tier_label = 'Confirmed-Tier Event' if cur['Peak Cases'] >= 2 else 'Watch-Tier Event'
                         df_test_gap.loc[cur['idxs'], 'tier'] = tier_label
                     cur = None
 
         if in_event:
             dur = len(cur['idxs'])
             if dur >= MIN_DURATION:
-                tier_label = 'Confirmed' if cur['Peak Cases'] >= 2 else 'Watch'
+                tier_label = 'Confirmed-Tier Event' if cur['Peak Cases'] >= 2 else 'Watch-Tier Event'
                 df_test_gap.loc[cur['idxs'], 'tier'] = tier_label
 
     cols_to_keep = ['district', 'disease_name', 'diagnosis_date', 'case_count',
