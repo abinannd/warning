@@ -1,0 +1,44 @@
+{
+    "target_series": "Palakkad - Chikungunya",
+    "test_period": "2025-01-01 to 2025-12-28",
+    "test_days": 362,
+    "step_1_point_accuracy": {
+        "MAE": 0.184,
+        "RMSE": 0.3921,
+        "Median AE": 0.0912,
+        "R\u00b2": -0.0237,
+        "MAPE (%)": 92.76,
+        "sMAPE (%)": 191.44,
+        "Zero-actual days (excluded from MAPE)": 328,
+        "Non-zero days (used for MAPE)": 34
+    },
+    "step_2_uncertainty_calibration": {
+        "coverage_rate_pct": 90.61,
+        "days_inside_ci": 328,
+        "total_days": 362,
+        "coverage_verdict": "WELL CALIBRATED (close to target 95%)",
+        "avg_interval_width": 0.7726,
+        "median_interval_width": 0.7704,
+        "residual_variance": 0.153,
+        "residual_std": 0.3911,
+        "mean_bias": 0.0273,
+        "homoscedasticity": "Roughly homoscedastic (variance ratio = 0.96)"
+    },
+    "step_3_residual_diagnostics": {
+        "skewness": 4.0784,
+        "kurtosis": 20.4237,
+        "mean_bias": 0.0273
+    },
+    "step_4_cross_validation": {
+        "cv_avg_mae": 0.2609,
+        "cv_avg_rmse": 0.3385,
+        "cv_avg_coverage_pct": 87.8
+    },
+    "step_5_naive_baseline": {
+        "naive_mae": 0.2031,
+        "naive_rmse": 0.3956,
+        "prophet_improvement_mae_pct": 9.42,
+        "prophet_improvement_rmse_pct": 0.89,
+        "verdict": "Prophet OUTPERFORMS the naive 30-day rolling mean baseline."
+    }
+}
