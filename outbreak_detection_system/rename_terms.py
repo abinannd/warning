@@ -1,7 +1,8 @@
 import os
 import re
 
-base_dir = r"C:\BRAIN-STORM\HT\warning\outbreak_detection_system"
+script_dir = os.path.dirname(os.path.abspath(__file__))
+base_dir = os.path.abspath(script_dir)
 
 def replace_in_file(rel_path, replacements, note=None):
     path = os.path.join(base_dir, rel_path)

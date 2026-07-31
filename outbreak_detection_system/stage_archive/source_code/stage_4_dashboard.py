@@ -1,17 +1,17 @@
 """
-Stage 4 Dashboard Builder — v3 (Optimized)
-- Fully vectorized weekly warning computation (no nested Python loops)
-- Seasonal profiles computed with correct sparsity handling
-- Default week set to most active confirmed event period
-- Disease breakdown sorted by activity level
-- All computation done once and serialized into a single JSON blob
+Stage 4 Dashboard Builder — v4 (With Hackathon Multi-Channel Notification Simulator)
+- Vectorized weekly warning computation
+- Seasonal profiles with sparsity handling
+- Interactive Leaflet map & Chart.js metrics
+- Citizen Alert Simulation: SMS Preview Card, WhatsApp Preview Card, Dispatch Alert Modal, Webhook API support & Audit Trail
 """
 import os
 import json
 import pandas as pd
 import numpy as np
 
-base_dir    = r"C:\BRAIN-STORM\HT\warning\outbreak_detection_system"
+script_dir  = os.path.dirname(os.path.abspath(__file__))
+base_dir    = os.path.abspath(os.path.join(script_dir, "..", ".."))
 data_dir    = os.path.join(base_dir, "data", "processed")
 reports_dir = os.path.join(base_dir, "reports")
 out_dir     = os.path.join(base_dir, "outputs")
@@ -39,7 +39,6 @@ districts = sorted(df["district"].unique().tolist())
 # ── 2. Vectorized weekly warning table ───────────────────────────────────────
 print("Building weekly warning table (vectorized)...")
 
-# Assign numeric priority to each row
 df["priority"] = 0
 df.loc[df["tier"] == "Confirmed-Tier Event", "priority"] = 4
 df.loc[df["tier"] == "Watch-Tier Event",     "priority"] = 3
@@ -47,105 +46,117 @@ df.loc[(df["priority"] == 0) & (df["risk_level"] == "Critical"), "priority"] = 2
 df.loc[(df["priority"] == 0) & (df["risk_level"] == "High"),     "priority"] = 2
 df.loc[(df["priority"] == 0) & (df["risk_level"] == "Medium"),   "priority"] = 2
 
-# Aggregate: for each (week, district, disease) — sum cases, max priority
-agg = df.groupby(["week", "district", "disease_name"]).agg(
-    cases=("case_count", "sum"),
-    priority=("priority", "max")
+grp = df.groupby(["week", "district", "disease_name"]).agg(
+    total_cases=("cases", "sum"),
+    max_priority=("priority", "max")
 ).reset_index()
 
-# For each (week, district) find the top disease by priority then cases
-agg = agg.sort_values(["week", "district", "priority", "cases"], ascending=[True, True, False, False])
-top = agg.groupby(["week", "district"]).first().reset_index()
+max_pri = grp.groupby(["week", "district"])["max_priority"].max().reset_index()
+max_pri = max_pri.rename(columns={"max_priority": "district_priority"})
 
-# Build the disease breakdown dict per (week, district)
-breakdown_map = {}
-for (wk, dist), grp in agg.groupby(["week", "district"]):
-    breakdown_map[(wk, dist)] = {
-        row.disease_name: {
-            "cases": int(row.cases),
-            "priority": int(row.priority),
-            "status": STATUS_MAP.get(int(row.priority), "Normal")
+grp = grp.merge(max_pri, on=["week", "district"])
+triggering = grp[grp["max_priority"] == grp["district_priority"]]
+trigger_dis = triggering.groupby(["week", "district"])["disease_name"].apply(lambda x: ", ".join(x)).reset_index()
+
+dist_cases = grp.groupby(["week", "district"])["total_cases"].sum().reset_index()
+dist_summary = max_pri.merge(dist_cases, on=["week", "district"]).merge(trigger_dis, on=["week", "district"], how="left")
+
+dist_summary["disease_name"] = dist_summary["disease_name"].fillna("-")
+dist_summary.loc[dist_summary["district_priority"] == 0, "disease_name"] = "-"
+
+warnings_payload = {}
+for w in weeks:
+    w_df = dist_summary[dist_summary["week"] == w]
+    sub  = grp[grp["week"] == w]
+    
+    if w_df.empty:
+        continue
+
+    d0 = df[df["week"] == w]["diagnosis_date"].min()
+    d1 = df[df["week"] == w]["diagnosis_date"].max()
+    date_label = f"{d0.strftime('%b %d')} – {d1.strftime('%b %d, %Y')}" if pd.notna(d0) else f"Week {w}"
+
+    w_dict = {"label": date_label}
+    for _, row in w_df.iterrows():
+        dist = row["district"]
+        prio = int(row["district_priority"])
+        
+        bd_df = sub[sub["district"] == dist].sort_values("total_cases", ascending=False)
+        breakdown = {}
+        for _, brow in bd_df.iterrows():
+            bprio = int(brow["max_priority"])
+            breakdown[brow["disease_name"]] = {
+                "cases":    int(brow["total_cases"]),
+                "priority": bprio,
+                "status":   STATUS_MAP[bprio]
+            }
+
+        w_dict[dist] = {
+            "status":         STATUS_MAP[prio],
+            "disease":        row["disease_name"],
+            "cases":          int(row["total_cases"]),
+            "color":          COLOR_MAP[prio],
+            "recommendation": REC_MAP[prio],
+            "breakdown":      breakdown
         }
-        for _, row in grp.iterrows()
-    }
+    warnings_payload[f"Week {w}"] = w_dict
 
-# Assemble weekly_warnings dict
-weekly_warnings = {}
-for wk in weeks:
-    wdata = df[df["week"] == wk]["diagnosis_date"]
-    start = wdata.min().strftime("%b %d")
-    end   = wdata.max().strftime("%b %d, %Y")
-    label = f"{start} \u2013 {end}"
-    wkey  = f"Week {wk}"
-    weekly_warnings[wkey] = {"label": label}
-    for dist in districts:
-        row = top[(top["week"] == wk) & (top["district"] == dist)]
-        if row.empty:
-            p, dis, cases = 0, "-", 0
-        else:
-            r    = row.iloc[0]
-            p    = int(r["priority"])
-            dis  = r["disease_name"] if p > 0 else "-"
-            cases = int(r["cases"])
-        weekly_warnings[wkey][dist] = {
-            "status":      STATUS_MAP[p],
-            "disease":     dis,
-            "cases":       cases,
-            "color":       COLOR_MAP[p],
-            "recommendation": REC_MAP[p],
-            "breakdown":   breakdown_map.get((wk, dist), {})
-        }
+# ── 3. Find most active week as default ──────────────────────────────────────
+active_counts = {
+    w: sum(1 for d in districts if warnings_payload.get(w, {}).get(d, {}).get("color") in ["red", "yellow"])
+    for w in warnings_payload.keys()
+}
+default_week = max(active_counts, key=active_counts.get) if active_counts else f"Week {weeks[0]}"
+print(f"Default active week: {default_week} ({active_counts[default_week]} active warnings)")
 
-# ── 3. Seasonal profiles (2018-2023 training data) ──────────────────────────
-print("Building seasonal profiles...")
-df_train = pd.read_pickle(os.path.join(data_dir, "train_timeseries.pkl"))
-df_train["diagnosis_date"] = pd.to_datetime(df_train["diagnosis_date"])
-df_train["month"] = df_train["diagnosis_date"].dt.month
-
-# Vectorized monthly average per (district, disease, month)
-monthly = df_train.groupby(["district", "disease_name", "month"])["case_count"].mean().reset_index()
-# Find the max per (district, disease) to filter out truly zero-activity pairs
-max_vals = monthly.groupby(["district", "disease_name"])["case_count"].max()
+# ── 4. Seasonal profiles ─────────────────────────────────────────────────────
+print("Computing seasonal profiles...")
+train_df = df[df["diagnosis_date"].dt.year < 2024].copy()
+train_df["month"] = train_df["diagnosis_date"].dt.month
 
 seasonal_history = {}
-for dist in districts:
-    seasonal_history[dist] = {}
-    for dis in df_train["disease_name"].unique():
-        key = (dist, dis)
-        if key not in max_vals or max_vals[key] < 0.1:
-            continue  # Skip fully sparse pairs
-        sub = monthly[(monthly["district"] == dist) & (monthly["disease_name"] == dis)]
-        full = sub.set_index("month")["case_count"].reindex(range(1, 13), fill_value=0)
-        seasonal_history[dist][dis] = [round(float(v), 4) for v in full.tolist()]
+all_diseases = sorted(df["disease_name"].unique().tolist())
 
-# ── 4. Prophet predictions ────────────────────────────────────────────────────
+for dist in districts:
+    dist_df = train_df[train_df["district"] == dist]
+    dist_seasonal = {}
+    for dis in all_diseases:
+        dis_df = dist_df[dist_df["disease_name"] == dis]
+        if dis_df.empty:
+            dist_seasonal[dis] = [0.0]*12
+            continue
+        monthly = dis_df.groupby(["year", "month"])["cases"].sum().reset_index()
+        grid = pd.MultiIndex.from_product(
+            [monthly["year"].unique(), range(1, 13)],
+            names=["year", "month"]
+        ).to_frame().reset_index(drop=True)
+        full_m = grid.merge(monthly, on=["year", "month"], how="left").fillna(0)
+        means  = full_m.groupby("month")["cases"].mean().reindex(range(1, 13), fill_value=0.0).round(2).tolist()
+        dist_seasonal[dis] = means
+    seasonal_history[dist] = dist_seasonal
+
+# ── 5. Prophet forecast (Palakkad – Chikungunya) ────────────────────────────
 print("Loading Prophet predictions...")
 prophet_data = []
-pcsv = os.path.join(reports_dir, "prophet_predictions_palakkad_chikungunya.csv")
-if os.path.exists(pcsv):
-    df_pro = pd.read_csv(pcsv).iloc[::3].copy()
-    df_pro["date"] = pd.to_datetime(df_pro["date"]).dt.strftime("%b %d")
-    for _, r in df_pro.iterrows():
+pr_path = os.path.join(reports_dir, "prophet_test_eval_palakkad_chikungunya.csv")
+if os.path.exists(pr_path):
+    pr_df = pd.read_csv(pr_path)
+    pr_df["ds"] = pd.to_datetime(pr_df["ds"])
+    for _, r in pr_df.iterrows():
         prophet_data.append({
-            "date":      r["date"],
-            "actual":    float(r["actual"]),
-            "predicted": round(float(r["predicted"]), 4),
-            "upper":     round(float(r["upper_95"]), 4),
-            "anomaly":   bool(r["anomaly_high"])
+            "date":      r["ds"].strftime("%Y-%m-%d"),
+            "actual":    round(float(r["y"]), 2),
+            "predicted": round(float(r["yhat"]), 2),
+            "upper":     round(float(r["yhat_upper"]), 2),
+            "lower":     round(float(r["yhat_lower"]), 2)
         })
 
-# ── 5. Find best default week (most active confirmed week) ───────────────────
-confirmed_by_week = df[df["tier"] == "Confirmed-Tier Event"].groupby("week").size()
-default_week_num  = int(confirmed_by_week.idxmax()) if not confirmed_by_week.empty else weeks[22]
-default_week      = f"Week {default_week_num}"
-print(f"Default week: {default_week} ({weekly_warnings[default_week]['label']})")
-
-# ── 6. Build payload ──────────────────────────────────────────────────────────
+# ── 6. Assemble payload JSON ──────────────────────────────────────────────────
 payload = {
     "weeks":        [f"Week {w}" for w in weeks],
     "default_week": default_week,
     "districts":    districts,
-    "warnings":     weekly_warnings,
+    "warnings":     warnings_payload,
     "seasonal":     seasonal_history,
     "prophet":      prophet_data
 }
@@ -210,6 +221,60 @@ tr:hover td{background:#f8fafc}
 .l-popup .tr{font-size:.75rem;color:#64748b;margin-bottom:6px}
 .l-popup hr{border:none;border-top:1px solid #e2e8f0;margin:6px 0}
 .l-popup .rec{font-size:.75rem;color:#475569;font-style:italic;line-height:1.4}
+
+/* Notification Simulator Styles */
+.nav-tab-container{display:flex;gap:8px;margin-bottom:12px;border-bottom:1px solid #e2e8f0;padding-bottom:6px}
+.nav-tab{background:#f1f5f9;border:none;border-radius:6px;padding:6px 12px;font-size:.78rem;font-weight:600;color:#64748b;cursor:pointer;transition:all .15s ease}
+.nav-tab.active{background:#0f172a;color:#fff}
+.nav-tab:hover:not(.active){background:#e2e8f0;color:#1e293b}
+
+.alert-card{border-radius:10px;padding:12px 14px;font-size:.82rem;font-family:'Inter',sans-serif;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+
+/* SMS Card */
+.sms-card{background:#0f172a;color:#f8fafc;border:1px solid #334155}
+.phone-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:.7rem;color:#94a3b8;font-weight:600;border-bottom:1px solid #1e293b;padding-bottom:4px}
+.sender-tag{color:#38bdf8;font-weight:700}
+.sms-body{font-family:'Segoe UI',Tahoma,sans-serif;background:#1e293b;padding:10px 12px;border-radius:8px;line-height:1.45;border-left:3px solid #38bdf8;font-size:.8rem;margin-bottom:8px;color:#f1f5f9;word-break:break-word}
+.sms-footer{display:flex;justify-content:space-between;align-items:center;font-size:.7rem;color:#64748b}
+.sim-badge{background:rgba(56,189,248,.15);color:#38bdf8;padding:2px 6px;border-radius:4px;font-weight:600}
+
+/* WhatsApp Card */
+.wa-card{background:#efeae2;border:1px solid #cbd5e1;color:#111b21}
+.wa-header{display:flex;align-items:center;gap:8px;background:#075e54;color:#fff;padding:8px 12px;border-radius:8px 8px 0 0;margin:-12px -14px 10px -14px}
+.wa-avatar{width:28px;height:28px;background:#128c7e;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px}
+.wa-name{font-weight:700;font-size:.82rem}
+.v-check{color:#38bdf8;font-size:.75rem}
+.wa-sub{font-size:.68rem;opacity:.85}
+.wa-bubble{background:#dcf8c6;border-radius:8px;padding:10px 12px;box-shadow:0 1px 1px rgba(0,0,0,.13);position:relative}
+.wa-title{font-weight:700;color:#075e54;font-size:.78rem;margin-bottom:4px}
+.wa-text{font-size:.79rem;line-height:1.4;color:#111b21;white-space:pre-line}
+.wa-time{font-size:.65rem;color:#667781;text-align:right;margin-top:4px;font-weight:500}
+.blue-ticks{color:#34b7f1;font-weight:bold}
+.wa-actions{display:flex;gap:6px;margin-top:8px}
+.wa-btn{flex:1;text-align:center;background:#fff;border:1px solid #128c7e;color:#128c7e;padding:6px;border-radius:6px;font-size:.72rem;font-weight:600;cursor:pointer;transition:background .15s}
+.wa-btn:hover{background:#e8f5e9}
+.wa-btn.primary{background:#128c7e;color:#fff}
+.wa-btn.primary:hover{background:#075e54}
+
+/* Modal Styles */
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,23,42,.6);backdrop-filter:blur(3px);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s ease}
+.modal-overlay.open{opacity:1;pointer-events:auto}
+.modal-box{background:#fff;border-radius:14px;width:90%;max-width:480px;padding:20px 24px;box-shadow:0 20px 25px -5px rgba(0,0,0,.2);transform:scale(.95);transition:transform .2s ease}
+.modal-overlay.open .modal-box{transform:scale(1)}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid #e2e8f0}
+.modal-header h3{font-size:1.05rem;font-weight:700;color:#0f172a}
+.close-modal{background:none;border:none;font-size:1.3rem;color:#64748b;cursor:pointer}
+.modal-body{font-size:.83rem;color:#334155;margin-bottom:16px}
+.form-group{margin-bottom:12px}
+.form-group label{display:block;font-weight:600;font-size:.78rem;color:#475569;margin-bottom:4px}
+.form-group input,.form-group select{width:100%;padding:8px 10px;border:1px solid #cbd5e1;border-radius:8px;font-size:.82rem}
+.chk-group{display:flex;flex-direction:column;gap:6px;background:#f8fafc;padding:10px;border-radius:8px;border:1px solid #e2e8f0}
+.chk-group label{font-weight:500;font-size:.8rem;color:#1e293b;display:flex;align-items:center;gap:8px;cursor:pointer}
+
+/* Toast Notifications */
+.toast-container{position:fixed;top:20px;right:20px;z-index:10000;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.toast{background:#0f172a;color:#fff;padding:12px 18px;border-radius:10px;font-size:.82rem;font-weight:500;box-shadow:0 10px 15px -3px rgba(0,0,0,.3);border-left:4px solid #10b981;display:flex;align-items:center;gap:10px;transform:translateX(120%);transition:transform .3s cubic-bezier(.16,1,.3,1);pointer-events:auto}
+.toast.show{transform:translateX(0)}
 </style>
 </head>
 <body>
@@ -254,6 +319,67 @@ tr:hover td{background:#f8fafc}
           </table>
         </div>
       </div>
+
+      <!-- Hackathon Notification Simulator Panel -->
+      <div class="panel" id="notificationPanel">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #f1f5f9;">
+          <h2 style="margin:0;border:none;padding:0;">📱 Citizen Alert Simulation</h2>
+          <button id="dispatchAlertBtn" onclick="openAlertModal()" style="background:#ef4444;color:#fff;border:none;border-radius:8px;padding:6px 14px;font-weight:600;font-size:.78rem;cursor:pointer;display:flex;align-items:center;gap:6px;box-shadow:0 2px 4px rgba(239,68,68,.25);">
+            <span>⚡ Send Alert Broadcast</span>
+          </button>
+        </div>
+        
+        <div class="nav-tab-container">
+          <button class="nav-tab active" id="tabSmsBtn" onclick="switchAlertTab('sms')">💬 SMS Preview</button>
+          <button class="nav-tab" id="tabWaBtn" onclick="switchAlertTab('wa')">🟢 WhatsApp Preview</button>
+        </div>
+
+        <!-- SMS Card Preview -->
+        <div id="smsCard" class="alert-card sms-card">
+          <div class="phone-header">
+            <span class="sender-tag">📩 +91-DPH-ALERT (Kerala Health)</span>
+            <span class="time-tag">Just Now</span>
+          </div>
+          <div class="sms-body" id="smsBodyText">
+            Loading SMS alert payload...
+          </div>
+          <div class="sms-footer">
+            <span id="smsCharStats">168 chars | 2 SMS segments</span>
+            <span class="sim-badge">Hackathon Demo Mode</span>
+          </div>
+        </div>
+
+        <!-- WhatsApp Card Preview -->
+        <div id="waCard" class="alert-card wa-card" style="display:none;">
+          <div class="wa-header">
+            <div class="wa-avatar">🟢</div>
+            <div>
+              <div class="wa-name">Kerala Health Dept <span class="v-check">✓</span></div>
+              <div class="wa-sub">Official Outbreak Early Warning</div>
+            </div>
+          </div>
+          <div class="wa-bubble">
+            <div class="wa-title" id="waTitle">🚨 OUTBREAK WARNING ADVISORY</div>
+            <div class="wa-text" id="waText">Loading WhatsApp message...</div>
+            <div class="wa-time">
+              <span id="waTimeVal">12:30 PM</span> • Delivered <span class="blue-ticks">✓✓</span>
+            </div>
+          </div>
+          <div class="wa-actions">
+            <div class="wa-btn" onclick="triggerSimulatedAck('Guidelines Viewed')">📋 View Guidelines</div>
+            <div class="wa-btn primary" onclick="triggerSimulatedAck('Alert Acknowledged')">🚨 Acknowledge Advisory</div>
+          </div>
+        </div>
+
+        <!-- Audit Trail History -->
+        <div style="margin-top:10px;">
+          <div class="ml">Session Dispatch Log</div>
+          <div id="auditLog" style="font-size:.73rem;color:#64748b;font-style:italic;max-height:80px;overflow-y:auto;background:#f8fafc;padding:6px 8px;border-radius:6px;border:1px solid #e2e8f0;">
+            No alerts dispatched in this session yet. Click "Send Alert Broadcast" above to test.
+          </div>
+        </div>
+      </div>
+
       <div class="panel">
         <h2>&#x1F4C8; Seasonal Risk Pattern</h2>
         <p id="seasonalWarning" style="font-size:.78rem;color:#475569;line-height:1.5;margin-bottom:10px"></p>
@@ -268,6 +394,56 @@ tr:hover td{background:#f8fafc}
     For official guidance, consult local health authorities.
   </p>
 </div>
+
+<!-- Dispatch Alert Modal -->
+<div class="modal-overlay" id="alertModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="modalHeaderTitle">⚡ Dispatch Outbreak Warning</h3>
+      <button class="close-modal" onclick="closeAlertModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div style="background:#fffbeb;border:1px solid #fde68a;color:#92400e;padding:10px;border-radius:8px;margin-bottom:12px;font-size:.78rem;">
+        <strong>Target District:</strong> <span id="modalTargetDist">Palakkad</span> | 
+        <strong>Status:</strong> <span id="modalTargetStatus" style="font-weight:700;">Emergency Warning</span>
+      </div>
+
+      <div class="form-group">
+        <label>Select Target Audience:</label>
+        <select id="modalAudience">
+          <option value="All Registered Residents">All Registered Residents & ASHAs (District Broadcast)</option>
+          <option value="Primary Health Centers">Primary Health Centers (PHCs) & Local Clinics</option>
+          <option value="District Medical Officers">District Medical Officers (DMO) Emergency Team</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Broadcast Channels:</label>
+        <div class="chk-group">
+          <label><input type="checkbox" id="chkSms" checked> 💬 SMS Broadcast (Twilio / GSM Gateway)</label>
+          <label><input type="checkbox" id="chkWa" checked> 🟢 WhatsApp Business API (Cloud API)</label>
+          <label><input type="checkbox" id="chkBeacon"> 📡 DPH Public Health Emergency Beacon</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Optional Webhook API Endpoint (Live Backend Integration):</label>
+        <input type="text" id="webhookUrl" placeholder="https://your-api.com/webhook/send-alert (Optional)">
+      </div>
+
+      <div id="dispatchProgress" style="display:none;text-align:center;padding:10px 0;color:#3b82f6;font-weight:600;font-size:.82rem;">
+        <span id="progressText">⏳ Initializing dispatch gateway...</span>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:8px;">
+      <button onclick="closeAlertModal()" style="background:#f1f5f9;color:#475569;border:none;padding:8px 14px;border-radius:8px;font-weight:600;font-size:.8rem;cursor:pointer;">Cancel</button>
+      <button id="sendAlertNowBtn" onclick="executeBroadcast()" style="background:#ef4444;color:#fff;border:none;padding:8px 16px;border-radius:8px;font-weight:700;font-size:.8rem;cursor:pointer;display:flex;align-items:center;gap:6px;">🚀 Broadcast Alert Now</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Notifications Container -->
+<div class="toast-container" id="toastContainer"></div>
 
 <script>
 const DATA = """ + DATA_JSON + """;
@@ -290,6 +466,7 @@ let currentDist = 'Palakkad';
 let chartInst   = null;
 let markers     = {};
 let labelMarkers = [];
+let auditHistory = [];
 
 // ── Map ───────────────────────────────────────────────────────────────────────
 const map = L.map('map',{zoomControl:true}).setView([11.55,75.95],8);
@@ -317,7 +494,6 @@ sel.addEventListener('change', e => {
 
 // ── Map markers ───────────────────────────────────────────────────────────────
 function updateMap() {
-  // Remove old markers
   Object.values(markers).forEach(m => map.removeLayer(m));
   labelMarkers.forEach(m => map.removeLayer(m));
   markers = {}; labelMarkers = [];
@@ -327,14 +503,14 @@ function updateMap() {
   DATA.districts.forEach(dist => {
     const d      = wd[dist];
     const hex    = COLOR[d.color];
-    const isSeas = (dist === 'Palakkad'); // Prophet seasonal watch
+    const isSeas = (dist === 'Palakkad');
     const isSelected = (dist === currentDist);
 
     const m = L.circleMarker(COORDS[dist], {
       radius:      isSelected ? 24 : 20,
       fillColor:   hex,
       fillOpacity: 0.88,
-      color:       isSeas ? '#38bdf8' : (isSelected ? '#fff' : '#fff'),
+      color:       isSeas ? '#38bdf8' : '#fff',
       weight:      isSeas ? 3 : (isSelected ? 3 : 1.5),
       dashArray:   isSeas ? '6 4' : ''
     }).addTo(map);
@@ -351,7 +527,6 @@ function updateMap() {
     m.on('click', () => { currentDist = dist; updateMap(); updateDetail(); });
     markers[dist] = m;
 
-    // District name label
     const icon = L.divIcon({
       className:'',
       html:`<span style="font:700 10px/1 Inter,sans-serif;color:#0f172a;text-shadow:0 0 4px #fff,0 0 4px #fff,0 0 4px #fff;white-space:nowrap;pointer-events:none">${dist}</span>`,
@@ -361,8 +536,116 @@ function updateMap() {
     labelMarkers.push(lm);
   });
 
-  // Open popup for selected district
   setTimeout(() => { if(markers[currentDist]) markers[currentDist].openPopup(); }, 700);
+}
+
+// ── Notification Simulator Logic ──────────────────────────────────────────────
+function switchAlertTab(tab) {
+  document.getElementById('tabSmsBtn').classList.toggle('active', tab==='sms');
+  document.getElementById('tabWaBtn').classList.toggle('active', tab==='wa');
+  document.getElementById('smsCard').style.display = tab==='sms' ? 'block' : 'none';
+  document.getElementById('waCard').style.display = tab==='wa' ? 'block' : 'none';
+}
+
+function updateAlertPreviews(d) {
+  const dis = currentDist;
+  const status = d.status;
+  const disease = d.disease !== '-' ? d.disease : 'Infectious Surveillance';
+  const cases = d.cases > 0 ? `${d.cases} case(s)` : '0 cases';
+  const rec = d.recommendation;
+
+  const smsText = `[KERALA DPH ALERT] ${status.toUpperCase()} for ${dis}. ${disease} (${cases} in ${currentWeek}). Action: ${rec} Helpline: 1056. Ref:#OBD-${currentWeek.replace(/\\s+/g,'')}`;
+  document.getElementById('smsBodyText').textContent = smsText;
+  document.getElementById('smsCharStats').textContent = `${smsText.length} chars | ${Math.ceil(smsText.length/160)} SMS segment(s)`;
+
+  const waText = `*District:* ${dis}\n*Alert Level:* ${status}\n*Primary Trigger:* ${disease} (${cases})\n*Period:* ${currentWeek}\n\n*Recommended Action:*\n${rec}\n\n_Generated by AI Outbreak Detection System (Malabar Network)_`;
+  document.getElementById('waTitle').textContent = `🚨 ${status.toUpperCase()} ADVISORY`;
+  document.getElementById('waText').textContent = waText;
+  
+  const now = new Date();
+  document.getElementById('waTimeVal').textContent = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+}
+
+function openAlertModal() {
+  const d = DATA.warnings[currentWeek][currentDist];
+  document.getElementById('modalTargetDist').textContent = currentDist;
+  document.getElementById('modalTargetStatus').textContent = d.status;
+  document.getElementById('alertModal').classList.add('open');
+  document.getElementById('dispatchProgress').style.display = 'none';
+  document.getElementById('sendAlertNowBtn').disabled = false;
+}
+
+function closeAlertModal() {
+  document.getElementById('alertModal').classList.remove('open');
+}
+
+function executeBroadcast() {
+  const d = DATA.warnings[currentWeek][currentDist];
+  const audience = document.getElementById('modalAudience').value;
+  const useSms = document.getElementById('chkSms').checked;
+  const useWa = document.getElementById('chkWa').checked;
+  const webhook = document.getElementById('webhookUrl').value.trim();
+
+  const btn = document.getElementById('sendAlertNowBtn');
+  const prog = document.getElementById('dispatchProgress');
+  const progTxt = document.getElementById('progressText');
+
+  btn.disabled = true;
+  prog.style.display = 'block';
+
+  progTxt.textContent = '⚡ [1/3] Encrypting alert payload...';
+
+  setTimeout(() => {
+    progTxt.textContent = '📡 [2/3] Dispatching to SMS & WhatsApp Gateways...';
+  }, 500);
+
+  setTimeout(() => {
+    progTxt.textContent = '✅ [3/3] Broadcast complete!';
+
+    if (webhook) {
+      fetch(webhook, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ district: currentDist, week: currentWeek, status: d.status, disease: d.disease, audience, timestamp: new Date().toISOString() })
+      }).catch(err => console.log('Webhook call status:', err));
+    }
+
+    const count = Math.floor(Math.random() * 800) + 1200;
+    const channels = [];
+    if(useSms) channels.push('SMS');
+    if(useWa) channels.push('WhatsApp');
+
+    showToast(`✅ Alert Broadcast Dispatched! ${count} messages delivered to ${audience} in ${currentDist} via ${channels.join(' & ') || 'System Beacon'}.`);
+
+    const timeStr = new Date().toLocaleTimeString();
+    auditHistory.unshift(`[${timeStr}] Dispatched ${d.status} for ${currentDist} (${d.disease}) → ${audience} (${channels.join('/')})`);
+    renderAuditLog();
+
+    closeAlertModal();
+  }, 1100);
+}
+
+function triggerSimulatedAck(action) {
+  showToast(`📱 Citizen Interaction Recorded: "${action}" for ${currentDist} alert.`);
+}
+
+function showToast(msg) {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = `<span>${msg}</span>`;
+  container.appendChild(toast);
+  setTimeout(() => toast.classList.add('show'), 50);
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 300);
+  }, 4000);
+}
+
+function renderAuditLog() {
+  const container = document.getElementById('auditLog');
+  if (auditHistory.length === 0) return;
+  container.innerHTML = auditHistory.map(item => `<div style="padding:2px 0;border-bottom:1px solid #f1f5f9;">• ${item}</div>`).join('');
 }
 
 // ── Detail panel ──────────────────────────────────────────────────────────────
@@ -378,7 +661,6 @@ function updateDetail() {
   document.getElementById('detailCases').textContent   = d.cases > 0 ? `${d.cases} case(s)` : '0 cases';
   document.getElementById('detailAction').textContent  = d.recommendation;
 
-  // Disease breakdown table — sorted by cases desc
   const tbody = document.getElementById('breakdownBody');
   tbody.innerHTML = '';
   const entries = Object.entries(d.breakdown || {}).sort((a,b) => b[1].cases - a[1].cases);
@@ -393,7 +675,9 @@ function updateDetail() {
     });
   }
 
-  // Sync popup
+  // Update notification cards
+  updateAlertPreviews(d);
+
   setTimeout(() => {
     if(markers[currentDist] && !markers[currentDist].isPopupOpen())
       markers[currentDist].openPopup();
@@ -428,10 +712,9 @@ function updateChart() {
     const sd  = DATA.seasonal[currentDist] || {};
     const sets = [];
     let ci = 0;
-    // Sort diseases by their annual total so most active shows first
     const byActivity = Object.entries(sd).sort((a,b)=>b[1].reduce((s,x)=>s+x,0)-a[1].reduce((s,x)=>s+x,0));
     byActivity.forEach(([dis,avgs]) => {
-      if(Math.max(...avgs) < 0.05) return; // skip truly zero series
+      if(Math.max(...avgs) < 0.05) return;
       sets.push({label:dis,data:avgs,borderColor:CHART_COLORS[ci%CHART_COLORS.length],tension:.35,borderWidth:1.8,pointRadius:2,fill:false});
       ci++;
     });
@@ -453,5 +736,3 @@ with open(out_file, "w", encoding="utf-8") as f:
     f.write(html)
 
 print(f"Dashboard saved to: {out_file}")
-print(f"Default week: {default_week} | {weekly_warnings[default_week]['label']}")
-print("Done.")
