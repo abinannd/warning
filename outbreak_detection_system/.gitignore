@@ -1,7 +1,5 @@
 __pycache__/
 *.pyc
-.venv/
-venv/
 .env
 .idea/
 .vscode/
@@ -9,3 +7,5 @@ outputs/
 data/interim/
 data/processed/
 logs/
+*.log
+.DS_Store

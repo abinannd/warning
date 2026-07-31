@@ -29,16 +29,14 @@ outbreak_detection_system/
 ```
 
 ## Installation Instructions
-1. Clone the repository.
-2. Create a virtual environment using Python 3.11+:
-   ```bash
-   python -m venv venv
-   ```
-3. Activate the environment.
-4. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+
+This project uses the system Python environment (no virtual environment is required).
+
+```bash
+git clone <repository-url>
+cd outbreak_detection_system
+pip install -r requirements.txt
+```
 
 ## Planned Pipeline
 1. **Data Preparation & Time Series Construction**: Loading, cleaning, validating, and aggregating data.
