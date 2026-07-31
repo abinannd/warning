@@ -1,0 +1,13 @@
+[project]
+name = "outbreak_detection_system"
+version = "0.1.0"
+description = "AI-Based Early Outbreak Detection System"
+authors = [
+    { name = "Author Name", email = "author@example.com" }
+]
+requires-python = ">=3.11"
+dependencies = []
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
