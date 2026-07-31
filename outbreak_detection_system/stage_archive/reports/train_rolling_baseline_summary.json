@@ -1,0 +1,14 @@
+{
+    "total_rows_processed": 105168,
+    "number_of_district_disease_series": 48,
+    "rolling_window_size": 30,
+    "ewma_span": 14,
+    "missing_values_before_filling": 0,
+    "missing_values_after_filling": 0,
+    "duplicate_rows": 0,
+    "verification_status": true,
+    "output_file_locations": {
+        "dataset": "C:\\BRAIN-STORM\\HT\\warning\\outbreak_detection_system\\data\\processed\\train_rolling_baseline.pkl",
+        "report": "C:\\BRAIN-STORM\\HT\\warning\\outbreak_detection_system\\data\\processed\\train_rolling_baseline_summary.json"
+    }
+}

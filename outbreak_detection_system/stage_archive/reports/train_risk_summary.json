@@ -1,0 +1,17 @@
+{
+    "total_rows": 105168,
+    "number_of_district_disease_series": 48,
+    "count_low": 97393,
+    "count_medium": 1941,
+    "count_high": 3799,
+    "count_critical": 2035,
+    "percentage_low": 92.60706678837668,
+    "percentage_medium": 1.8456184390689183,
+    "percentage_high": 3.6123155332420507,
+    "percentage_critical": 1.9349992393123385,
+    "verification_status": true,
+    "output_file_locations": {
+        "dataset": "C:\\BRAIN-STORM\\HT\\warning\\outbreak_detection_system\\data\\processed\\train_risk_levels.pkl",
+        "report": "C:\\BRAIN-STORM\\HT\\warning\\outbreak_detection_system\\data\\processed\\train_risk_summary.json"
+    }
+}

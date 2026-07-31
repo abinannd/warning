@@ -1,0 +1,23 @@
+{
+    "chronological_integrity": true,
+    "zero_overlap": true,
+    "successful_split": true,
+    "dataset_ready_for_rolling_baseline": true,
+    "details": {
+        "train_rows": 105168,
+        "val_rows": 17568,
+        "test_rows": 17376,
+        "train_range": [
+            "2018-01-01",
+            "2023-12-31"
+        ],
+        "val_range": [
+            "2024-01-01",
+            "2024-12-31"
+        ],
+        "test_range": [
+            "2025-01-01",
+            "2025-12-28"
+        ]
+    }
+}

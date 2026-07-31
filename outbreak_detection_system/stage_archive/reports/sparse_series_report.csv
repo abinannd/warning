@@ -1,0 +1,49 @@
+district,disease_name,total_days,total_cases,non_zero_days,zero_days,percentage_zero_days,maximum_daily_cases,status,recommendation
+Kannur,Chickenpox,2919,460,416,2503,85.74854402192533,3,Suitable,Use for anomaly detection
+Kannur,Chikungunya,2919,526,478,2441,83.62452894826995,3,Suitable,Use for anomaly detection
+Kannur,Common Cold,2919,483,452,2467,84.51524494689963,2,Suitable,Use for anomaly detection
+Kannur,Dengue,2919,499,449,2470,84.61801986981843,4,Suitable,Use for anomaly detection
+Kannur,Flu,2919,502,456,2463,84.37821171634121,2,Suitable,Use for anomaly detection
+Kannur,Malaria,2919,480,436,2483,85.06337786913326,3,Suitable,Use for anomaly detection
+Kannur,Typhoid,2919,475,432,2487,85.20041109969168,3,Suitable,Use for anomaly detection
+Kannur,Viral Fever,2919,503,455,2464,84.41247002398082,4,Suitable,Use for anomaly detection
+Kasaragod,Chickenpox,2919,375,348,2571,88.0781089414183,3,Suitable,Use for anomaly detection
+Kasaragod,Chikungunya,2919,326,304,2615,89.58547447756081,2,Suitable,Use for anomaly detection
+Kasaragod,Common Cold,2919,376,347,2572,88.1123672490579,3,Suitable,Use for anomaly detection
+Kasaragod,Dengue,2919,365,335,2584,88.52346694073313,3,Suitable,Use for anomaly detection
+Kasaragod,Flu,2919,359,324,2595,88.90030832476874,3,Suitable,Use for anomaly detection
+Kasaragod,Malaria,2919,397,371,2548,87.29016786570743,3,Suitable,Use for anomaly detection
+Kasaragod,Typhoid,2919,410,377,2542,87.08461801986982,2,Suitable,Use for anomaly detection
+Kasaragod,Viral Fever,2919,377,356,2563,87.80404248030148,3,Suitable,Use for anomaly detection
+Kozhikode,Chickenpox,2919,484,451,2468,84.54950325453923,3,Suitable,Use for anomaly detection
+Kozhikode,Chikungunya,2919,508,462,2457,84.17266187050359,3,Suitable,Use for anomaly detection
+Kozhikode,Common Cold,2919,533,480,2439,83.55601233299075,4,Suitable,Use for anomaly detection
+Kozhikode,Dengue,2919,467,435,2484,85.09763617677287,2,Suitable,Use for anomaly detection
+Kozhikode,Flu,2919,506,458,2461,84.309695101062,2,Suitable,Use for anomaly detection
+Kozhikode,Malaria,2919,523,457,2462,84.34395340870161,3,Suitable,Use for anomaly detection
+Kozhikode,Typhoid,2919,511,467,2452,84.00137033230558,2,Suitable,Use for anomaly detection
+Kozhikode,Viral Fever,2919,491,445,2474,84.75505310037684,3,Suitable,Use for anomaly detection
+Malappuram,Chickenpox,2919,440,407,2512,86.05686879068173,2,Suitable,Use for anomaly detection
+Malappuram,Chikungunya,2919,508,452,2467,84.51524494689963,3,Suitable,Use for anomaly detection
+Malappuram,Common Cold,2919,417,388,2531,86.7077766358342,2,Suitable,Use for anomaly detection
+Malappuram,Dengue,2919,419,390,2529,86.63926002055499,3,Suitable,Use for anomaly detection
+Malappuram,Flu,2919,426,389,2530,86.67351832819459,3,Suitable,Use for anomaly detection
+Malappuram,Malaria,2919,415,391,2528,86.60500171291538,3,Suitable,Use for anomaly detection
+Malappuram,Typhoid,2919,424,396,2523,86.43371017471738,2,Suitable,Use for anomaly detection
+Malappuram,Viral Fever,2919,433,402,2517,86.22816032887975,4,Suitable,Use for anomaly detection
+Palakkad,Chickenpox,2919,326,308,2611,89.44844124700239,2,Suitable,Use for anomaly detection
+Palakkad,Chikungunya,2919,354,326,2593,88.83179170948955,3,Suitable,Use for anomaly detection
+Palakkad,Common Cold,2919,337,316,2603,89.17437478588558,3,Suitable,Use for anomaly detection
+Palakkad,Dengue,2919,301,282,2637,90.33915724563208,2,Suitable,Use for anomaly detection
+Palakkad,Flu,2919,332,315,2604,89.20863309352518,3,Suitable,Use for anomaly detection
+Palakkad,Malaria,2919,309,294,2625,89.92805755395683,2,Suitable,Use for anomaly detection
+Palakkad,Typhoid,2919,310,286,2633,90.20212401507366,3,Suitable,Use for anomaly detection
+Palakkad,Viral Fever,2919,325,307,2612,89.482699554642,3,Suitable,Use for anomaly detection
+Wayanad,Chickenpox,2919,373,355,2564,87.83830078794107,2,Suitable,Use for anomaly detection
+Wayanad,Chikungunya,2919,380,349,2570,88.04385063377869,2,Suitable,Use for anomaly detection
+Wayanad,Common Cold,2919,380,355,2564,87.83830078794107,3,Suitable,Use for anomaly detection
+Wayanad,Dengue,2919,370,340,2579,88.35217540253511,3,Suitable,Use for anomaly detection
+Wayanad,Flu,2919,378,357,2562,87.76978417266187,2,Suitable,Use for anomaly detection
+Wayanad,Malaria,2919,359,342,2577,88.28365878725592,3,Suitable,Use for anomaly detection
+Wayanad,Typhoid,2919,368,339,2580,88.38643371017471,3,Suitable,Use for anomaly detection
+Wayanad,Viral Fever,2919,380,354,2565,87.87255909558068,3,Suitable,Use for anomaly detection

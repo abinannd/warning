@@ -1,0 +1,7 @@
+{
+    "every_series_has_2919_days": true,
+    "no_duplicate_dates_in_series": true,
+    "no_missing_dates": true,
+    "all_non_negative_integers": true,
+    "no_nan_values": true
+}

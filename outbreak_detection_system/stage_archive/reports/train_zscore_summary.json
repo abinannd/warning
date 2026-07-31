@@ -1,0 +1,16 @@
+{
+    "total_rows_processed": 105168,
+    "number_of_district_disease_series": 48,
+    "minimum_z_score": -1.1547005383792512,
+    "maximum_z_score": 5.294651389216625,
+    "mean_z_score": -0.0012434258494859872,
+    "standard_deviation_of_z_scores": 0.9718508959465053,
+    "number_of_zero_standard_deviation_replacements": 2042,
+    "number_of_nan_values": 0,
+    "number_of_infinite_values": 0,
+    "verification_status": true,
+    "output_file_locations": {
+        "dataset": "C:\\BRAIN-STORM\\HT\\warning\\outbreak_detection_system\\data\\processed\\train_zscore.pkl",
+        "report": "C:\\BRAIN-STORM\\HT\\warning\\outbreak_detection_system\\data\\processed\\train_zscore_summary.json"
+    }
+}
