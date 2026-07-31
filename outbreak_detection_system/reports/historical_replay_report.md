@@ -169,3 +169,64 @@ The original rolling baseline (Stages 2.1�2.4) used a 30-day window ending on da
 ### Interpretation
 
 The gap-corrected baseline separates the 'what the system is testing' window from the 'what the system learned from' window. This is the correct statistical design for a surveillance system where the signal of interest should not contaminate the reference distribution used to judge it.
+
+
+---
+
+## 13. Two-Tier Alerting System (Stage 3.4)
+
+### System Description
+
+
+
+---
+
+## 13. Two-Tier Alerting System (Stage 3.4)
+
+### System Description
+
+> The system uses a two-tier alerting model, mirroring real-world surveillance practice: a sensitive **Watch** tier for early signals worth monitoring, and a high-precision **Confirmed** tier reserved for sustained, statistically robust anomalies (peak cases ≥2, duration ≥2 days, corrected against a gap-separated historical baseline).
+
+### Tier Definitions
+
+| Tier | Label | min_duration | min_peak_cases | Baseline | Purpose |
+|------|-------|-------------|----------------|----------|---------|
+| Tier 1 | **Confirmed** | ≥2 days | ≥2 cases | Gap-corrected [T-37, T-8] | High-precision confirmed outbreak alert |
+| Tier 2 | **Watch** | ≥2 days | ≥1 case (any) | Gap-corrected [T-37, T-8] | Sensitive early signal for monitoring |
+
+*Tiers are mutually exclusive: events qualifying for Tier 1 are excluded from Tier 2.*
+
+### Results on 2025 Test Set
+
+| Tier               |   Events |   Critical |   High |   Medium |   Avg Dur |   Max Z |
+|--------------------|----------|------------|--------|----------|-----------|---------|
+| Confirmed (Tier 1) |        4 |          0 |      2 |        2 |      4    |   2.947 |
+| Watch (Tier 2)     |       25 |          0 |      0 |        0 |      2.84 |   3.116 |
+
+### District Breakdown
+
+| District   |   Confirmed |   Watch |   Total |
+|------------|-------------|---------|---------|
+| Kannur     |           1 |       5 |       6 |
+| Kasaragod  |           0 |       1 |       1 |
+| Kozhikode  |           0 |       8 |       8 |
+| Malappuram |           0 |       5 |       5 |
+| Palakkad   |           2 |       3 |       5 |
+| Wayanad    |           1 |       3 |       4 |
+
+### Disease Breakdown
+
+| Disease     |   Confirmed |   Watch |   Total |
+|-------------|-------------|---------|---------|
+| Chickenpox  |           0 |       1 |       1 |
+| Chikungunya |           2 |       0 |       2 |
+| Common Cold |           1 |       3 |       4 |
+| Dengue      |           0 |       3 |       3 |
+| Flu         |           0 |       6 |       6 |
+| Malaria     |           0 |       5 |       5 |
+| Typhoid     |           0 |       1 |       1 |
+| Viral Fever |           1 |       6 |       7 |
+
+### Design Rationale
+
+The two-tier model was motivated by the ablation test (Stage 3.4 diagnostic), which showed that the gap-corrected baseline alone reduces peak_cases=1 artifacts from 101 (contaminated baseline) to 18 — a substantial improvement, but not complete elimination. Rather than discarding these 18 signals entirely, they are preserved as low-confidence Watch-tier alerts, allowing health authorities to apply domain judgment on whether to investigate further.
