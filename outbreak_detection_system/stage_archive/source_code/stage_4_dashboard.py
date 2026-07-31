@@ -140,15 +140,15 @@ html_content = f"""<!DOCTYPE html>
     <title>Early Outbreak Warning Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
         body {{ background-color: #f8fafc; font-family: 'Inter', sans-serif; }}
-        .card-green {{ border-top: 4px solid #10b981; background: white; }}
-        .card-yellow {{ border-top: 4px solid #f59e0b; background: #fffbeb; }}
-        .card-red {{ border-top: 4px solid #ef4444; background: #fef2f2; }}
-        .text-green {{ color: #059669; }}
-        .text-yellow {{ color: #d97706; }}
-        .text-red {{ color: #dc2626; }}
-        .active-card {{ outline: 2px solid #3b82f6; box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.5); }}
+        .text-green {{ color: #4a9d5f; }}
+        .text-yellow {{ color: #e6a817; }}
+        .text-red {{ color: #c0392b; }}
+        #map {{ z-index: 0; }}
+        .leaflet-popup-content {{ font-family: 'Inter', sans-serif; }}
     </style>
 </head>
 <body class="text-slate-800">
@@ -161,16 +161,20 @@ html_content = f"""<!DOCTYPE html>
         
         <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 flex flex-wrap gap-6 items-center">
             <div class="flex items-center gap-2">
-                <div class="w-4 h-4 rounded-full bg-red-500"></div>
+                <div class="w-4 h-4 rounded-full" style="background-color: #c0392b"></div>
                 <span class="text-sm font-medium">Emergency (Confirmed Event)</span>
             </div>
             <div class="flex items-center gap-2">
-                <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
+                <div class="w-4 h-4 rounded-full" style="background-color: #e6a817"></div>
                 <span class="text-sm font-medium">Watch / Advisory</span>
             </div>
             <div class="flex items-center gap-2">
-                <div class="w-4 h-4 rounded-full bg-green-500"></div>
+                <div class="w-4 h-4 rounded-full" style="background-color: #4a9d5f"></div>
                 <span class="text-sm font-medium">Normal</span>
+            </div>
+            <div class="flex items-center gap-2 ml-4">
+                <div class="w-4 h-4 rounded-full border-2 border-dashed border-blue-500 bg-transparent"></div>
+                <span class="text-sm font-medium">Seasonal Watch</span>
             </div>
             <div class="flex-grow"></div>
             <div class="text-xs text-slate-500 italic max-w-lg text-right">
@@ -182,23 +186,21 @@ html_content = f"""<!DOCTYPE html>
     <!-- Controls -->
     <div class="mb-6 flex items-center gap-4 bg-white p-4 rounded-lg shadow-sm border border-slate-200">
         <label for="weekSelect" class="font-semibold text-slate-700">Select Time Period:</label>
-        <select id="weekSelect" class="bg-slate-50 border border-slate-300 text-slate-900 rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+        <select id="weekSelect" class="bg-slate-50 border border-slate-300 text-slate-900 rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 z-10 relative">
             <!-- Populated by JS -->
         </select>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-        <!-- Region Grid -->
-        <div class="lg:col-span-1">
-            <h2 class="text-xl font-bold mb-4">Regional Status Map</h2>
-            <div class="grid grid-cols-2 gap-4" id="districtGrid">
-                <!-- Populated by JS -->
-            </div>
+        <!-- Region Map -->
+        <div class="lg:col-span-2">
+            <h2 class="text-xl font-bold mb-4">Geographic Risk Map</h2>
+            <div id="map" class="w-full rounded-lg shadow-sm border border-slate-200" style="height: 600px;"></div>
         </div>
 
         <!-- Detail Panel -->
-        <div class="lg:col-span-2 space-y-6">
+        <div class="lg:col-span-1 space-y-6">
             
             <!-- Status Detail -->
             <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
@@ -207,14 +209,14 @@ html_content = f"""<!DOCTYPE html>
                     <span id="detailBadge" class="px-3 py-1 rounded-full text-sm font-bold bg-slate-100 text-slate-600">No Data</span>
                 </div>
                 
-                <div class="grid grid-cols-2 gap-6 mb-6">
-                    <div>
+                <div class="mb-6">
+                    <div class="mb-4">
                         <p class="text-sm text-slate-500 font-medium uppercase tracking-wider">Triggering Disease</p>
                         <p class="text-lg font-semibold" id="detailDisease">-</p>
                     </div>
                     <div>
                         <p class="text-sm text-slate-500 font-medium uppercase tracking-wider">Public Health Action</p>
-                        <p class="text-md" id="detailAction">-</p>
+                        <p class="text-sm mt-1" id="detailAction">-</p>
                     </div>
                 </div>
             </div>
@@ -223,9 +225,9 @@ html_content = f"""<!DOCTYPE html>
             <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
                 <h3 class="text-xl font-bold mb-2">Upcoming Seasonal Risk</h3>
                 <p class="text-sm text-slate-600 mb-4" id="seasonalWarning">
-                    Comparing historical 2018-2024 patterns to identify upcoming risk windows.
+                    Comparing historical patterns to identify upcoming risk windows.
                 </p>
-                <div class="h-64">
+                <div class="h-48">
                     <canvas id="seasonalChart"></canvas>
                 </div>
             </div>
@@ -235,11 +237,28 @@ html_content = f"""<!DOCTYPE html>
 </div>
 
 <script>
-    const DATA = {json.dumps(json_payload)};
+    const DATA = {{json.dumps(json_payload)}};
     
+    const districtCoords = {{
+        'Kannur': [11.8745, 75.3704],
+        'Kasaragod': [12.4996, 74.9869],
+        'Kozhikode': [11.2588, 75.7804],
+        'Malappuram': [11.0410, 76.0788],
+        'Palakkad': [10.7867, 76.6548],
+        'Wayanad': [11.6854, 76.1320]
+    }};
+
     let currentWeek = DATA.weeks[0];
     let currentDistrict = "Palakkad"; // Default
     let chartInstance = null;
+    let markers = {{}};
+
+    // Init Leaflet Map
+    const map = L.map('map').setView([11.6, 75.9], 8);
+    L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png', {{
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+    }}).addTo(map);
 
     // Init Dropdown
     const select = document.getElementById('weekSelect');
@@ -254,40 +273,66 @@ html_content = f"""<!DOCTYPE html>
     
     select.addEventListener('change', (e) => {{
         currentWeek = e.target.value;
-        renderGrid();
+        renderMap();
         renderDetail();
     }});
 
-    function renderGrid() {{
-        const grid = document.getElementById('districtGrid');
-        grid.innerHTML = '';
+    function renderMap() {{
         const weekData = DATA.warnings[currentWeek];
+        
+        // Remove existing markers
+        Object.values(markers).forEach(m => map.removeLayer(m));
+        markers = {{}};
         
         DATA.districts.forEach(dist => {{
             const dData = weekData[dist];
-            const div = document.createElement('div');
+            const coords = districtCoords[dist];
             
-            let cardClass = "card-green";
-            let textColor = "text-green";
-            if(dData.color === 'red') {{ cardClass = "card-red"; textColor = "text-red"; }}
-            else if(dData.color === 'yellow') {{ cardClass = "card-yellow"; textColor = "text-yellow"; }}
+            let colorHex = '#4a9d5f'; // Green
+            if(dData.color === 'red') colorHex = '#c0392b';
+            else if(dData.color === 'yellow') colorHex = '#e6a817';
             
-            if(dist === currentDistrict) cardClass += " active-card";
-            
-            div.className = `p-4 rounded shadow-sm cursor-pointer transition-all hover:shadow-md ${{cardClass}}`;
-            div.onclick = () => {{
-                currentDistrict = dist;
-                renderGrid();
-                renderDetail();
+            // Check for seasonal warning (for demo, Palakkad has Prophet ML risk)
+            let isSeasonalRisk = false;
+            if(dist === 'Palakkad') {{
+                isSeasonalRisk = true;
+            }}
+
+            const markerOptions = {{
+                color: isSeasonalRisk ? '#3b82f6' : 'white',
+                weight: isSeasonalRisk ? 3 : 1,
+                dashArray: isSeasonalRisk ? '5, 5' : '',
+                fillColor: colorHex,
+                fillOpacity: 0.9,
+                radius: 18
             }};
+
+            const marker = L.circleMarker(coords, markerOptions).addTo(map);
             
-            div.innerHTML = `
-                <h3 class="font-bold text-slate-800">${{dist}}</h3>
-                <p class="text-sm font-medium ${{textColor}}">${{dData.status}}</p>
-                ${{dData.disease !== '-' ? `<p class="text-xs text-slate-500 mt-1">${{dData.disease}}</p>` : ''}}
+            const popupContent = `
+                <div class="text-sm font-sans p-1 min-w-[150px]">
+                    <strong class="text-base">${{dist}}</strong><br/>
+                    <span class="font-bold" style="color: ${{colorHex}}">${{dData.status}}</span><br/>
+                    ${{dData.disease !== '-' ? `Trigger: ${{dData.disease}}<br/>` : ''}}
+                    <hr class="my-2"/>
+                    <em>${{dData.recommendation}}</em>
+                </div>
             `;
-            grid.appendChild(div);
+            
+            marker.bindPopup(popupContent);
+            
+            marker.on('click', () => {{
+                currentDistrict = dist;
+                renderDetail();
+            }});
+            
+            markers[dist] = marker;
         }});
+        
+        // Open popup for currently selected district
+        if(markers[currentDistrict]) {{
+            markers[currentDistrict].openPopup();
+        }}
     }}
 
     function renderDetail() {{
@@ -307,6 +352,11 @@ html_content = f"""<!DOCTYPE html>
         
         document.getElementById('detailDisease').textContent = dData.disease;
         document.getElementById('detailAction').textContent = dData.recommendation;
+
+        // Ensure popup matches selected district if selected via logic rather than click
+        if(markers[currentDistrict] && !markers[currentDistrict].isPopupOpen()) {{
+            markers[currentDistrict].openPopup();
+        }}
 
         renderChart();
     }}
@@ -352,7 +402,7 @@ html_content = f"""<!DOCTYPE html>
                             backgroundColor: 'rgba(59, 130, 246, 0.1)',
                             borderWidth: 1,
                             pointRadius: 0,
-                            fill: '-1' // Fills to previous dataset (which we'll make a hidden lower bound if needed, but for simplicity just fill to bottom)
+                            fill: '-1'
                         }}
                     ]
                 }},
@@ -374,7 +424,6 @@ html_content = f"""<!DOCTYPE html>
             let i = 0;
             
             for(const [dis, averages] of Object.entries(sData)) {{
-                // Only plot diseases with notable historical counts to reduce noise
                 if(Math.max(...averages) > 0.5) {{
                     datasets.push({{
                         label: dis,
@@ -402,7 +451,7 @@ html_content = f"""<!DOCTYPE html>
     }}
 
     // Initial Render
-    renderGrid();
+    renderMap();
     renderDetail();
 </script>
 
