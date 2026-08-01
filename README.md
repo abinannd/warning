@@ -144,6 +144,21 @@ flowchart TD
 
 ## Dataset & Credits
 
+
+## Future Enhancements
+
+- Integrate real-time hospital and clinic data feeds via secure APIs, subject to privacy and regulatory approval
+- Extend per-series forecasting from flagship diseases to the full district-disease matrix using scalable Prophet or deep learning models (e.g., LSTM, Temporal Fusion Transformer)
+- Incorporate spatial clustering (e.g., DBSCAN or Moran's I) to detect multi-district outbreak spread patterns
+- Add automated SMS/email alerts to health authorities when a High risk level is triggered
+- Support multilingual dashboard (Malayalam, English) for wider accessibility among local health workers
+- Expand dataset coverage beyond Kerala to other states using IDSP data integration
+- Add model explainability (e.g., SHAP) to help health officials understand why an alert was raised
+- Introduce a feedback loop where confirmed/false outbreak alerts are used to retrain and improve model accuracy
+- Deploy as a scalable cloud-based service with role-based access for district health officers
+- Mobile app version for field health workers to report cases and view alerts on the go
+
+
 ### Credits
 
 - Dataset source: Kerala Department of Health & Family Welfare, accessed through the official health data portal: [https://health.kerala.gov.in/](https://health.kerala.gov.in/). The data was used solely for prototype and research purposes under the hackathon context.
