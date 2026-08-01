@@ -1,0 +1,39 @@
+Path,Size,Modified,Reason
+docs,0,2026-07-31 10:41:22,Empty Directory
+notebooks,0,2026-07-31 10:41:22,Empty Directory
+outputs\figures,0,2026-07-31 10:41:22,Empty Directory
+outputs\logs,0,2026-07-31 10:41:22,Empty Directory
+outputs\reports,0,2026-07-31 10:41:22,Empty Directory
+reports\figures\test,0,2026-07-31 12:14:59,Empty Directory
+reports\figures\validation,0,2026-07-31 12:14:59,Empty Directory
+src\detection\__init__.py,0,2026-07-31 10:41:22,0-byte File
+src\preprocessing\__init__.py,0,2026-07-31 10:41:22,0-byte File
+src\spatial\__init__.py,0,2026-07-31 10:41:22,0-byte File
+src\utils\__init__.py,0,2026-07-31 10:41:22,0-byte File
+src\visualization\__init__.py,0,2026-07-31 10:41:22,0-byte File
+tests\__init__.py,0,2026-07-31 10:41:22,0-byte File
+main.py,1794,2026-08-01 07:57:11,Unused Scaffold Python
+src\detection\anomaly_detector.py,69,2026-07-31 10:41:22,Unused Scaffold Python
+src\detection\ewma.py,74,2026-07-31 10:41:22,Unused Scaffold Python
+src\detection\risk_scorer.py,83,2026-07-31 10:41:22,Unused Scaffold Python
+src\detection\rolling_stats.py,70,2026-07-31 10:41:22,Unused Scaffold Python
+src\detection\zscore_detector.py,66,2026-07-31 10:41:22,Unused Scaffold Python
+src\preprocessing\aggregator.py,79,2026-07-31 10:41:22,Unused Scaffold Python
+src\preprocessing\calendar.py,85,2026-07-31 10:41:22,Unused Scaffold Python
+src\preprocessing\cleaner.py,79,2026-07-31 10:41:22,Unused Scaffold Python
+src\preprocessing\loader.py,58,2026-07-31 10:41:22,Unused Scaffold Python
+src\preprocessing\splitter.py,79,2026-07-31 10:41:22,Unused Scaffold Python
+src\preprocessing\validator.py,78,2026-07-31 10:41:22,Unused Scaffold Python
+src\spatial\hotspot_detector.py,76,2026-07-31 10:41:22,Unused Scaffold Python
+src\utils\config.py,67,2026-07-31 10:41:22,Unused Scaffold Python
+src\utils\helpers.py,61,2026-07-31 10:41:22,Unused Scaffold Python
+src\utils\logger.py,50,2026-07-31 10:41:22,Unused Scaffold Python
+src\visualization\dashboard.py,72,2026-07-31 10:41:22,Unused Scaffold Python
+src\visualization\plots.py,63,2026-07-31 10:41:22,Unused Scaffold Python
+tests\test_aggregator.py,44,2026-07-31 10:41:22,Unused Scaffold Python
+tests\test_calendar.py,42,2026-07-31 10:41:22,Unused Scaffold Python
+tests\test_cleaner.py,41,2026-07-31 10:41:22,Unused Scaffold Python
+tests\test_loader.py,40,2026-07-31 10:41:22,Unused Scaffold Python
+tests\test_splitter.py,42,2026-07-31 10:41:22,Unused Scaffold Python
+tests\test_validator.py,43,2026-07-31 10:41:22,Unused Scaffold Python
+data\processed\test_detection_results_ORIGINAL_BACKUP.pkl,943298,2026-07-31 12:43:15,Superseded Backup
