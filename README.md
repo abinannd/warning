@@ -148,7 +148,7 @@ flowchart TD
 
 - Dataset source: Kerala Department of Health & Family Welfare, accessed through the official health data portal: [https://health.kerala.gov.in/site-search?q=dataset](https://health.kerala.gov.in/site-search?q=dataset). The data was used solely for prototype and research purposes under the hackathon context.
 - Mapping visualization is powered by the Google Maps Platform via the Google Maps JavaScript API, and any deployment must retain the required attribution as specified by Google Maps terms of use.
-- IDSP (Integrated Disease Surveillance Programme) outbreak reports were used as a secondary reference source.
+- IDSP (Integrated Disease Surveillance Programme) outbreak reports were used as a secondary reference source. [https://ihip.mohfw.gov.in/idsp/#/home-page](https://ihip.mohfw.gov.in/idsp/#/home-page)
 
 ## Disclaimer
 
