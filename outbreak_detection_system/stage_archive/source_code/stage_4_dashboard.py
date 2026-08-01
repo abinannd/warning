@@ -51,8 +51,8 @@ PRIORITY = {"None": 0, "Medium": 2, "High": 2, "Critical": 2}
 stat_results = []
 for (dist, dis), g in df_all.groupby(["district","disease_name"]):
     g = g.copy().sort_values("diagnosis_date").reset_index(drop=True)
-    b_mean = g["case_count"].rolling(30, min_periods=10).mean().shift(8).fillna(0)
-    b_std  = g["case_count"].rolling(30, min_periods=10).std().shift(8).fillna(0)
+    b_mean = g["case_count"].rolling(30, min_periods=15).mean().shift(8).fillna(0)
+    b_std  = g["case_count"].rolling(30, min_periods=15).std().shift(8).fillna(0)
     r_mean = g["case_count"].rolling(7, min_periods=1).mean()
     std_safe = b_std.clip(lower=EPSILON)
     std_safe[b_std == 0] = np.nan

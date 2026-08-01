@@ -233,3 +233,56 @@ The two-tier model was motivated by the ablation test (Stage 3.4 diagnostic), wh
 
 
 > **Note:** This report uses [Watch-Tier Event / Watch-Status Warning] terminology, which is distinct from the other report's equivalent term. **Watch-Tier Event** refers to a year-level statistical classification based on sustained low-peak-case anomalies; **Watch-Status Warning** refers to a real-time weekly risk snapshot based on the highest observed daily risk level.
+
+
+---
+
+## 13. Two-Tier Alerting System (Stage 3.4)
+
+### System Description
+
+> The system uses a two-tier alerting model, mirroring real-world surveillance practice: a sensitive **Watch** tier for early signals worth monitoring, and a high-precision **Confirmed** tier reserved for sustained, statistically robust anomalies (peak cases ≥2, duration ≥2 days, corrected against a gap-separated historical baseline).
+
+### Tier Definitions
+
+| Tier | Label | min_duration | min_peak_cases | Baseline | Purpose |
+|------|-------|-------------|----------------|----------|---------|
+| Tier 1 | **Confirmed** | ≥2 days | ≥2 cases | Gap-corrected [T-37, T-8] | High-precision confirmed outbreak alert |
+| Tier 2 | **Watch** | ≥2 days | ≥1 case (any) | Gap-corrected [T-37, T-8] | Sensitive early signal for monitoring |
+
+*Tiers are mutually exclusive: events qualifying for Tier 1 are excluded from Tier 2.*
+
+### Results on 2025 Test Set
+
+| Tier                          |   Events |   Critical |   High |   Medium |   Avg Dur |   Max Z |
+|-------------------------------|----------|------------|--------|----------|-----------|---------|
+| Confirmed-Tier Event (Tier 1) |        4 |          0 |      2 |        2 |      4    |   2.947 |
+| Watch-Tier Event (Tier 2)     |       25 |          0 |      0 |        0 |      2.84 |   3.116 |
+
+### District Breakdown
+
+| District   |   Confirmed-Tier Event |   Watch-Tier Event |   Total |
+|------------|------------------------|--------------------|---------|
+| Kannur     |                      1 |                  5 |       6 |
+| Kasaragod  |                      0 |                  1 |       1 |
+| Kozhikode  |                      0 |                  8 |       8 |
+| Malappuram |                      0 |                  5 |       5 |
+| Palakkad   |                      2 |                  3 |       5 |
+| Wayanad    |                      1 |                  3 |       4 |
+
+### Disease Breakdown
+
+| Disease     |   Confirmed-Tier Event |   Watch-Tier Event |   Total |
+|-------------|------------------------|--------------------|---------|
+| Chickenpox  |                      0 |                  1 |       1 |
+| Chikungunya |                      2 |                  0 |       2 |
+| Common Cold |                      1 |                  3 |       4 |
+| Dengue      |                      0 |                  3 |       3 |
+| Flu         |                      0 |                  6 |       6 |
+| Malaria     |                      0 |                  5 |       5 |
+| Typhoid     |                      0 |                  1 |       1 |
+| Viral Fever |                      1 |                  6 |       7 |
+
+### Design Rationale
+
+The two-tier model was motivated by the ablation test (Stage 3.4 diagnostic), which showed that the gap-corrected baseline alone reduces peak_cases=1 artifacts from 101 (contaminated baseline) to 18 — a substantial improvement, but not complete elimination. Rather than discarding these 18 signals entirely, they are preserved as low-confidence Watch-tier alerts, allowing health authorities to apply domain judgment on whether to investigate further.
