@@ -283,6 +283,15 @@ td{padding:4px 7px;border-bottom:1px solid #f8fafc;color:#334155}
 tr:hover td{background:#f8fafc}
 .chart-wrap{position:relative;height:180px;margin-top:8px}
 .disclaimer{font-size:.68rem;color:#94a3b8;font-style:italic;margin-top:12px;line-height:1.6;padding:0 2px}
+
+/* Alert Previews */
+.preview-container { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+.wa-preview, .email-preview { flex: 1; min-width: 200px; }
+.wa-header, .email-header { font-size: 0.72rem; color: #64748b; font-weight: 600; text-transform: uppercase; margin-bottom: 6px; }
+.wa-bubble { background: #dcf8c6; border-radius: 8px 8px 8px 0; padding: 10px; color: #1e293b; font-size: 0.75rem; line-height: 1.4; box-shadow: 0 1px 2px rgba(0,0,0,0.1); position: relative; white-space: pre-wrap; }
+.wa-bubble::before { content: ""; position: absolute; left: -6px; bottom: 0; width: 0; height: 0; border: 6px solid transparent; border-right-color: #dcf8c6; border-bottom-color: #dcf8c6; }
+.email-box { background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px; color: #334155; font-size: 0.75rem; line-height: 1.5; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.email-subject { font-weight: 600; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid #f1f5f9; color: #0f172a; }
 /* Popup */
 .lp{font-family:'Inter',sans-serif;min-width:180px;font-size:.8rem;line-height:1.4}
 .lp b{font-size:.88rem;display:block;margin-bottom:2px}
@@ -291,6 +300,14 @@ tr:hover td{background:#f8fafc}
 .lp .tr{font-size:.74rem;color:#64748b;margin-bottom:5px}
 .lp hr{border:none;border-top:1px solid #e2e8f0;margin:5px 0}
 .lp .rc{font-size:.72rem;color:#475569;font-style:italic}
+/* Disclaimer Banner */
+#disclaimerBanner { background-color: #fef5d9; border: 1px solid #fce895; border-radius: 8px; margin-bottom: 14px; color: #856404; font-size: 0.82rem; line-height: 1.4; transition: all 0.2s; overflow: hidden; }
+.banner-header { display: flex; align-items: center; padding: 10px 15px; font-weight: 600; cursor: pointer; }
+.banner-title { flex-grow: 1; margin-left: 6px; }
+.banner-toggle { background: none; border: none; color: #856404; font-size: 1.1rem; cursor: pointer; font-weight: bold; }
+.banner-body { padding: 0 15px 12px 15px; }
+.banner-collapsed .banner-body { display: none; }
+.banner-collapsed .banner-header { padding: 8px 15px; }
 </style>
 </head>
 <body>
@@ -308,6 +325,18 @@ tr:hover td{background:#f8fafc}
       <div class="leg"><div class="dot" style="background:#e6a817"></div>Watch/Advisory</div>
       <div class="leg"><div class="dot" style="background:#4a9d5f"></div>Normal</div>
       <div class="leg"><div class="dot-s"></div>AI Seasonal Watch</div>
+    </div>
+  </div>
+
+  <!-- Warning Banner -->
+  <div id="disclaimerBanner" class="">
+    <div class="banner-header" onclick="document.getElementById('disclaimerBanner').classList.toggle('banner-collapsed')">
+      <span style="font-size: 1.1rem;">&#9888;</span>
+      <span class="banner-title">Important: Dashboard Usage Disclaimer</span>
+      <button class="banner-toggle">&#10005;</button>
+    </div>
+    <div class="banner-body">
+      This dashboard provides statistical early-warning signals based on recent surveillance data trends. It does not predict outbreaks with certainty and should not be used as the sole basis for medical or public health decisions. Risk levels reflect deviations from historical statistical baselines, not confirmed epidemiological investigations. For official guidance, contact your local health authority. Some data shown (South Kerala district records) is synthetic and used for demonstration purposes only.
     </div>
   </div>
 
@@ -559,6 +588,24 @@ function updateChart() {
     chartInst = new Chart(ctx, {type:'line', data:{
       labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
       datasets:sets}, options:opts});
+  }
+
+  // Alert Previews
+  const wa = document.getElementById('waMessage');
+  const eSub = document.getElementById('emailSubject');
+  const eBod = document.getElementById('emailBody');
+  const d = DATA.warnings[currentWeek][currentDist];
+  if (d.status === 'Normal') {
+    wa.innerText = `No unusual disease activity detected in ${currentDist} this period. Routine surveillance continues.`;
+    eSub.innerText = `Health Update \u2014 ${currentDist} District, Kerala`;
+    eBod.innerHTML = `Dear Resident,<br><br>No unusual disease activity detected in ${currentDist} this period. Routine surveillance continues.<br><br>Kerala Health Department \u2014 Early Warning System`;
+  } else {
+    const dis = d.disease !== '-' ? d.disease : 'Unknown';
+    const rec = d.recommendation;
+    const cases = `${d.cases > 0 ? d.cases : 0}`;
+    wa.innerText = `[Kerala Health Alert] ${currentDist}: ${d.status} for ${dis}.\n${cases} case(s) reported this period.\nAction: ${rec.split('.')[0]}.\nStay alert. For guidance, contact your local health center.`;
+    eSub.innerText = `Health Advisory \u2014 ${currentDist} District, Kerala`;
+    eBod.innerHTML = `Dear Resident,<br><br>The Kerala Disease Surveillance System has issued a <strong>${d.status}</strong> for <strong>${dis}</strong> in ${currentDist} district.<br><br>Cases reported this period: ${cases}<br>Recommended action: ${rec}<br><br>This is an automated statistical advisory based on recent surveillance trends. For medical guidance, please consult your local health authority or nearest primary health center.<br><br>Kerala Health Department \u2014 Early Warning System`;
   }
 }
 
