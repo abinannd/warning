@@ -336,7 +336,7 @@ tr:hover td{background:#f8fafc}
       <button class="banner-toggle">&#10005;</button>
     </div>
     <div class="banner-body">
-      This dashboard provides statistical early-warning signals based on recent surveillance data trends. It does not predict outbreaks with certainty and should not be used as the sole basis for medical or public health decisions. Risk levels reflect deviations from historical statistical baselines, not confirmed epidemiological investigations. For official guidance, contact your local health authority. Some data shown (South Kerala district records) is synthetic and used for demonstration purposes only.
+      This dashboard provides statistical early-warning signals based on recent surveillance data trends. It does not predict outbreaks with certainty and should not be used as the sole basis for medical or public health decisions. Risk levels reflect deviations from historical statistical baselines, not confirmed epidemiological investigations. For official guidance, contact your local health authority.
     </div>
   </div>
 
