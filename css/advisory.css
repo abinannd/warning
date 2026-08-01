@@ -1,1 +1,60 @@
 /* ── Public Outbreak Advisory & Alert System ─────────────────────────────── */
+/* Advisory card */
+.advisory-card{
+  background:#fff;border-radius:12px;padding:16px;
+  box-shadow:0 1px 3px rgba(0,0,0,.06);margin-bottom:12px;
+  border-top:3px solid #e2e8f0;
+}
+.advisory-card.advisory-red{border-top-color:#b91c1c}
+.advisory-card.advisory-yellow{border-top-color:#d97706}
+.advisory-card.advisory-green{border-top-color:#16a34a}
+.advisory-card.advisory-gray{border-top-color:#94a3b8}
+.adv-header{
+  display:flex;align-items:center;gap:8px;
+  margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #f1f5f9;
+}
+.adv-header-icon{font-size:1rem}
+.adv-header-title{font-size:.9rem;font-weight:700;color:#0f172a;flex:1}
+.adv-header-badge{
+  font-size:.68rem;font-weight:700;padding:2px 9px;border-radius:9999px;
+}
+.adv-banner{
+  padding:10px 12px;border-radius:8px;margin-bottom:10px;
+  font-size:.8rem;font-weight:600;line-height:1.45;
+}
+.adv-banner-red{background:#fef2f2;color:#b91c1c;border-left:3px solid #b91c1c}
+.adv-banner-yellow{background:#fffbeb;color:#854d0e;border-left:3px solid #d97706}
+.adv-banner-green{background:#f0fdf4;color:#166534;border-left:3px solid #16a34a}
+.adv-banner-gray{background:#f8fafc;color:#475569;border-left:3px solid #94a3b8}
+.adv-section-label{
+  font-size:.68rem;font-weight:700;color:#64748b;text-transform:uppercase;
+  letter-spacing:.07em;margin:10px 0 5px;
+}
+.adv-message{
+  background:#f8fafc;border-radius:8px;padding:10px 12px;
+  font-size:.79rem;color:#334155;line-height:1.6;white-space:pre-line;
+}
+.adv-actions-list{
+  list-style:none;padding:0;margin:0;
+}
+.adv-actions-list li{
+  padding:4px 0 4px 20px;font-size:.79rem;color:#334155;line-height:1.5;
+  position:relative;
+}
+.adv-actions-list li::before{
+  content:'•';position:absolute;left:6px;color:#3b82f6;font-weight:700;
+}
+.adv-emergency-actions-list li::before{color:#b91c1c}
+.adv-meta{
+  margin-top:10px;padding-top:8px;border-top:1px solid #f1f5f9;
+  display:flex;flex-wrap:wrap;gap:8px;
+}
+.adv-meta-item{
+  font-size:.68rem;color:#94a3b8;background:#f8fafc;
+  padding:3px 8px;border-radius:6px;
+}
+.adv-contact{
+  margin-top:8px;padding:8px 12px;background:#eff6ff;
+  border-radius:8px;font-size:.76rem;color:#1d4ed8;line-height:1.5;
+}
+.adv-future-hook{display:none} /* placeholder for SMS/Email/WhatsApp/Push */

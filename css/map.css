@@ -1,0 +1,10 @@
+/* Map */
+#map{width:100%;height:620px;border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+/* Popup */
+.lp{font-family:'Inter',sans-serif;min-width:180px;font-size:.8rem;line-height:1.4}
+.lp b{font-size:.88rem;display:block;margin-bottom:2px}
+.lp .rg{font-size:.68rem;color:#94a3b8;margin-bottom:4px}
+.lp .st{font-weight:700;margin-bottom:4px}
+.lp .tr{font-size:.74rem;color:#64748b;margin-bottom:5px}
+.lp hr{border:none;border-top:1px solid #e2e8f0;margin:5px 0}
+.lp .rc{font-size:.72rem;color:#475569;font-style:italic}

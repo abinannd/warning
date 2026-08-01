@@ -8,19 +8,21 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
   maxZoom:18, attribution:'&copy; OpenStreetMap contributors'
 }).addTo(map);
 
-// ── Week selector ─────────────────────────────────────────────────────────────
-const sel = document.getElementById('weekSelect');
-DATA.weeks.forEach(w => {
-  const o = document.createElement('option');
-  o.value = w;
-  o.textContent = DATA.warnings[w].label || w;
-  if(w === currentWeek) o.selected = true;
-  sel.appendChild(o);
-});
-sel.addEventListener('change', e => {
-  currentWeek = e.target.value;
-  updateMap(); updateDetail();
-});
+// ── Week selector (called after DATA is loaded) ────────────────────────────────
+function initWeekSelector() {
+  const sel = document.getElementById('weekSelect');
+  DATA.weeks.forEach(w => {
+    const o = document.createElement('option');
+    o.value = w;
+    o.textContent = DATA.warnings[w].label || w;
+    if(w === currentWeek) o.selected = true;
+    sel.appendChild(o);
+  });
+  sel.addEventListener('change', e => {
+    currentWeek = e.target.value;
+    updateMap(); updateDetail();
+  });
+}
 
 // ── Stats pills ───────────────────────────────────────────────────────────────
 function updatePills() {

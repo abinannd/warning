@@ -22,8 +22,9 @@ const BADGE = {red:'badge-red', yellow:'badge-yellow', green:'badge-green'};
 const PCOL  = {4:'#b91c1c',3:'#92400e',2:'#854d0e',1:'#166534',0:'#94a3b8'};
 const CHART_COLORS = ['#3b82f6','#ef4444','#10b981','#f59e0b','#8b5cf6','#ec4899','#14b8a6','#64748b'];
 
-let currentWeek = DATA.default_week;
+let currentWeek = null;
 let currentDist = 'Palakkad';
+let currentAlertTab = 'sms';
 let chartInst   = null;
 function escapeHtml(value) {
   return String(value)
