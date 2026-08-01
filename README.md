@@ -57,14 +57,15 @@ flowchart TD
     end
 ```
 
+
 ## Stage-wise Reports
 
 | Stage | Description | Report |
-| --- | --- | --- |
-| 1 | Data Preparation & Preprocessing | [View Report](report/stage_wise_report/stage1_report.md) |
-| 2 | Time Series Construction & Validation | [View Report](report/stage_wise_report/stage2_report.md) |
-| 3 | Anomaly Detection & Forecasting Model | [View Report](report/stage_wise_report/stage3_report.md) |
-| 4 | Dashboard, Risk Mapping & Deployment | [View Report](report/stage_wise_report/stage4_report.md) |
+|-------|-------------|--------|
+| 1 | Data Preparation & Preprocessing | [View Report](ai/reports/stage_wise_report/STAGE1_README.md) |
+| 2 | Time Series Construction & Validation | [View Report](ai/reports/stage_wise_report/STAGE2_README.md) |
+| 3 | Anomaly Detection & Forecasting Model | [View Report](ai/reports/stage_wise_report/STAGE3_README.md) |
+| 4 | Dashboard, Risk Mapping & Deployment | [View Report](ai/reports/stage_wise_report/STAGE4_README.md) |
 
 <details>
 <summary>Stage 1 sub-step checklist</summary>
