@@ -20,22 +20,22 @@ def start_server(port, directory):
     socketserver.TCPServer.allow_reuse_address = True
     try:
         with socketserver.TCPServer(("", port), handler) as httpd:
-            print(f"Server successfully started at http://localhost:{port}/outbreak_dashboard.html")
+            print(f"Server successfully started at http://localhost:{port}/index.html")
             httpd.serve_forever()
     except OSError as e:
         print(f"Port {port} already in use or server active: {e}")
 
 def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    outputs_dir = os.path.join(script_dir, "outputs")
-    dashboard_file = os.path.join(outputs_dir, "outbreak_dashboard.html")
+    project_root = os.path.abspath(os.path.join(script_dir, ".."))
+    dashboard_file = os.path.join(project_root, "index.html")
 
     if not os.path.exists(dashboard_file):
         print(f"Error: Dashboard file not found at {dashboard_file}")
         sys.exit(1)
 
     port = 8050
-    url = f"http://localhost:{port}/outbreak_dashboard.html"
+    url = f"http://localhost:{port}/index.html"
 
     print("=" * 60)
     print("      Early Outbreak Detection System — Interactive Dashboard")
@@ -49,7 +49,7 @@ def main():
     webbrowser.open(url)
 
     # Start server if not running
-    start_server(port, outputs_dir)
+    start_server(port, project_root)
 
 if __name__ == "__main__":
     main()
