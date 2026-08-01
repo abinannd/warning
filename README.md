@@ -62,10 +62,10 @@ flowchart TD
 
 | Stage | Description | Report |
 |-------|-------------|--------|
-| 1 | Data Preparation & Preprocessing | [View Report](ai/reports/stage_wise_report/STAGE1_README.md) |
-| 2 | Time Series Construction & Validation | [View Report](ai/reports/stage_wise_report/STAGE2_README.md) |
-| 3 | Anomaly Detection & Forecasting Model | [View Report](ai/reports/stage_wise_report/STAGE3_README.md) |
-| 4 | Dashboard, Risk Mapping & Deployment | [View Report](ai/reports/stage_wise_report/STAGE4_README.md) |
+| 1 | Data Preparation & Preprocessing | [View Report](ai/reports/stage_wise_reort/STAGE1_README.md) |
+| 2 | Time Series Construction & Validation | [View Report](ai/reports/stage_wise_reort/STAGE2_README.md) |
+| 3 | Anomaly Detection & Forecasting Model | [View Report](ai/reports/stage_wise_reort/STAGE3_README.md) |
+| 4 | Dashboard, Risk Mapping & Deployment | [View Report](ai/reports/stage_wise_reort/STAGE4_README.md) |
 
 <details>
 <summary>Stage 1 sub-step checklist</summary>
