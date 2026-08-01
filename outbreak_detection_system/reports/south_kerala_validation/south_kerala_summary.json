@@ -1,0 +1,39 @@
+{
+    "total_records": 7487,
+    "districts": [
+        "Alappuzha",
+        "Idukki",
+        "Kollam",
+        "Kottayam",
+        "Pathanamthitta",
+        "Thiruvananthapuram"
+    ],
+    "diseases": [
+        "Acute Diarrheal Disease",
+        "Acute Encephalitis Syndrome",
+        "Amoebic Meningoencephalitis",
+        "Chicken Pox",
+        "Dengue Fever",
+        "Food Poisoning",
+        "Hepatitis A",
+        "Hepatitis B",
+        "Hepatitis C",
+        "Hepatitis E",
+        "Influenza",
+        "Leptospirosis",
+        "Malaria",
+        "Measles",
+        "Rabies",
+        "Scrub Typhus",
+        "West Nile Fever"
+    ],
+    "date_range": [
+        "2020-01-04",
+        "2024-12-31"
+    ],
+    "total_events": 37,
+    "confirmed_tier": 15,
+    "watch_tier": 22,
+    "max_z_score": 5.2947,
+    "top_disease_by_events": "Leptospirosis"
+}

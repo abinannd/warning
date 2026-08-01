@@ -1,0 +1,38 @@
+District,Disease,Start,End,Peak Cases,Peak Z,max_risk,Event ID,Duration,Tier,Highest Risk
+Alappuzha,Dengue Fever,2023-07-08,2023-07-09,1,2.165,1,SK-0001,2,Watch-Tier Event,Medium
+Alappuzha,Influenza,2023-10-14,2023-10-18,1,2.165,1,SK-0002,5,Watch-Tier Event,Medium
+Alappuzha,Leptospirosis,2022-06-04,2022-06-05,1,2.0132028309884555,1,SK-0003,2,Watch-Tier Event,Medium
+Alappuzha,Leptospirosis,2024-06-08,2024-06-10,2,2.553,2,SK-0004,3,Confirmed-Tier Event,High
+Alappuzha,Leptospirosis,2024-06-12,2024-06-13,1,2.093472449523183,1,SK-0005,2,Watch-Tier Event,Medium
+Alappuzha,Rabies,2023-04-17,2023-04-18,1,2.165,1,SK-0006,2,Watch-Tier Event,Medium
+Alappuzha,Rabies,2024-11-22,2024-11-27,1,2.947268999908746,2,SK-0007,6,Watch-Tier Event,High
+Idukki,Leptospirosis,2020-07-26,2020-07-29,2,2.9472689999087502,2,SK-0008,4,Confirmed-Tier Event,High
+Idukki,Leptospirosis,2020-07-31,2020-08-02,2,2.949576240750525,2,SK-0009,3,Confirmed-Tier Event,High
+Idukki,Leptospirosis,2022-07-21,2022-07-23,0,2.165,1,SK-0010,3,Watch-Tier Event,Medium
+Idukki,Leptospirosis,2022-10-19,2022-10-22,1,3.729729796344687,3,SK-0011,4,Watch-Tier Event,Critical
+Idukki,Malaria,2024-12-11,2024-12-16,1,2.165,1,SK-0012,6,Watch-Tier Event,Medium
+Kollam,Dengue Fever,2020-09-04,2020-09-08,4,2.507,2,SK-0013,5,Confirmed-Tier Event,High
+Kollam,Dengue Fever,2021-09-08,2021-09-10,1,2.165,1,SK-0014,3,Watch-Tier Event,Medium
+Kollam,Dengue Fever,2022-06-05,2022-06-10,2,2.165,1,SK-0015,6,Confirmed-Tier Event,Medium
+Kollam,Dengue Fever,2024-06-02,2024-06-08,3,5.294651389216372,3,SK-0016,7,Confirmed-Tier Event,Critical
+Kollam,Influenza,2024-03-10,2024-03-13,1,2.947268999908751,2,SK-0017,4,Watch-Tier Event,High
+Kollam,Influenza,2024-12-22,2024-12-23,1,2.9472689999087502,2,SK-0018,2,Watch-Tier Event,High
+Kollam,Leptospirosis,2024-06-04,2024-06-07,4,2.8572059813396233,2,SK-0019,4,Confirmed-Tier Event,High
+Kollam,Rabies,2023-12-10,2023-12-13,1,2.165,1,SK-0020,4,Watch-Tier Event,Medium
+Kottayam,Dengue Fever,2024-07-12,2024-07-17,2,3.7297297963447065,3,SK-0021,6,Confirmed-Tier Event,Critical
+Kottayam,Leptospirosis,2024-06-06,2024-06-10,1,3.1156911888153282,3,SK-0022,5,Watch-Tier Event,Critical
+Pathanamthitta,Dengue Fever,2023-07-09,2023-07-12,1,2.165,1,SK-0023,4,Watch-Tier Event,Medium
+Pathanamthitta,Leptospirosis,2020-06-07,2020-06-11,3,3.115691188815444,3,SK-0024,5,Confirmed-Tier Event,Critical
+Pathanamthitta,Leptospirosis,2024-06-07,2024-06-08,3,2.553,2,SK-0025,2,Confirmed-Tier Event,High
+Thiruvananthapuram,Acute Encephalitis Syndrome,2023-09-29,2023-10-04,1,2.165,1,SK-0026,6,Watch-Tier Event,Medium
+Thiruvananthapuram,Dengue Fever,2024-02-07,2024-02-09,1,2.165,1,SK-0027,3,Watch-Tier Event,Medium
+Thiruvananthapuram,Dengue Fever,2024-05-12,2024-05-17,1,2.947268999908752,2,SK-0028,6,Watch-Tier Event,High
+Thiruvananthapuram,Influenza,2024-05-14,2024-05-15,1,2.553,2,SK-0029,2,Watch-Tier Event,High
+Thiruvananthapuram,Leptospirosis,2021-06-04,2021-06-11,7,3.829395366878068,3,SK-0030,8,Confirmed-Tier Event,Critical
+Thiruvananthapuram,Leptospirosis,2022-06-14,2022-06-17,5,2.728460975711031,2,SK-0031,4,Confirmed-Tier Event,High
+Thiruvananthapuram,Leptospirosis,2024-06-05,2024-06-13,7,4.873352304340159,3,SK-0032,9,Confirmed-Tier Event,Critical
+Thiruvananthapuram,Rabies,2024-09-29,2024-10-01,1,2.165,1,SK-0033,3,Watch-Tier Event,Medium
+Thiruvananthapuram,Scrub Typhus,2020-06-10,2020-06-13,1,2.947268999908751,2,SK-0034,4,Watch-Tier Event,High
+Thiruvananthapuram,Scrub Typhus,2020-09-21,2020-09-24,1,2.165,1,SK-0035,4,Watch-Tier Event,Medium
+Thiruvananthapuram,Scrub Typhus,2023-05-08,2023-05-14,3,2.165,1,SK-0036,7,Confirmed-Tier Event,Medium
+Thiruvananthapuram,Scrub Typhus,2024-06-02,2024-06-03,3,2.947268999908759,2,SK-0037,2,Confirmed-Tier Event,High
