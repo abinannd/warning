@@ -59,6 +59,41 @@ td{padding:4px 7px;border-bottom:1px solid #f8fafc;color:#334155}
 tr:hover td{background:#f8fafc}
 .chart-wrap{position:relative;height:180px;margin-top:8px}
 .disclaimer{font-size:.68rem;color:#94a3b8;font-style:italic;margin-top:12px;line-height:1.6;padding:0 2px}
+/* Citizen Alert Simulation */
+.citizen-shell{border:1px solid #e2e8f0;border-radius:12px;padding:12px;background:linear-gradient(180deg,#fff 0%,#f8fafc 100%)}
+.citizen-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.citizen-title{font-size:.95rem;font-weight:700;color:#0f172a}
+.citizen-btn{border:none;background:#dc2626;color:#fff;padding:7px 10px;border-radius:8px;font-size:.75rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.citizen-btn:hover{background:#b91c1c}
+.tab-row{display:flex;gap:8px;margin-bottom:10px}
+.tab-btn{border:1px solid #cbd5e1;background:#f8fafc;color:#475569;border-radius:999px;padding:6px 12px;font-size:.75rem;font-weight:600;cursor:pointer}
+.tab-btn.active{background:#0f172a;color:#fff;border-color:#0f172a}
+.preview-card{border-radius:12px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.sms-card{background:linear-gradient(135deg,#111827 0%,#1f2937 100%);color:#f9fafb;border:1px solid #374151;position:relative}
+.sms-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px}
+.sms-sender{font-size:.72rem;font-weight:600;color:#f3f4f6}
+.sms-badge{display:inline-block;padding:3px 8px;border-radius:999px;background:rgba(248,113,113,.18);color:#fda4af;font-size:.64rem;font-weight:700;letter-spacing:.04em}
+.sms-time{font-size:.68rem;color:#cbd5e1;font-weight:600}
+.sms-body{font-size:.82rem;line-height:1.55;color:#f9fafb;white-space:pre-wrap;word-break:break-word}
+.sms-meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:.72rem;color:#cbd5e1}
+.whatsapp-card{background:#f0f2f5;border:1px solid #dcfce7;padding:0;overflow:hidden}
+.whatsapp-head{background:linear-gradient(135deg,#128c7e 0%,#075e54 100%);color:#fff;padding:10px 12px}
+.whatsapp-title{font-size:.84rem;font-weight:700;display:flex;align-items:center;gap:6px}
+.whatsapp-sub{font-size:.68rem;color:#dcfce7;margin-top:2px}
+.whatsapp-dot{width:8px;height:8px;border-radius:50%;background:#25d366;display:inline-block;box-shadow:0 0 0 2px rgba(255,255,255,.2)}
+.whatsapp-body{padding:12px;background:#f0f2f5}
+.whatsapp-bubble{background:#dcf8c6;border-radius:12px;padding:12px 12px 10px;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.whatsapp-bubble div{font-size:.8rem;line-height:1.4;color:#111827;margin-bottom:4px}
+.whatsapp-bubble strong{font-weight:700}
+.whatsapp-bubble .wa-block{margin-bottom:8px}
+.whatsapp-footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:.72rem;color:#64748b}
+.whatsapp-check{color:#34b7f1;font-weight:700}
+.wa-actions{display:flex;gap:8px;margin-top:10px}
+.wa-btn{border:1px solid #cbd5e1;background:#fff;color:#334155;border-radius:8px;padding:7px 10px;font-size:.74rem;font-weight:600;cursor:pointer}
+.wa-btn-primary{background:#16a34a;color:#fff;border-color:#16a34a}
+.dispatch-log{margin-top:12px}
+.dispatch-label{font-size:.72rem;font-weight:700;color:#64748b;letter-spacing:.08em;margin-bottom:6px;text-transform:uppercase}
+.dispatch-log textarea{width:100%;border:1px solid #e2e8f0;border-radius:8px;padding:8px 9px;background:#f8fafc;color:#334155;font-size:.74rem;line-height:1.45;resize:vertical;min-height:70px}
 /* Popup */
 .lp{font-family:'Inter',sans-serif;min-width:180px;font-size:.8rem;line-height:1.4}
 .lp b{font-size:.88rem;display:block;margin-bottom:2px}
@@ -124,8 +159,52 @@ tr:hover td{background:#f8fafc}
           <tbody id="breakdownBody"></tbody></table>
         </div>
       </div>
-      <div class="panel">
-        <div class="panel-h">&#x1F4C8; Seasonal Risk Pattern</div>
+      <div class="panel">        <div class="citizen-shell">
+          <div class="citizen-head">
+            <div class="citizen-title">Citizen Alert Simulation</div>
+            <button id="sendAlertBtn" class="citizen-btn" type="button">⚡ Send Alert Broadcast</button>
+          </div>
+          <div class="tab-row" role="tablist">
+            <button class="tab-btn active" data-tab="sms" type="button">SMS Preview</button>
+            <button class="tab-btn" data-tab="whatsapp" type="button">WhatsApp Preview</button>
+          </div>
+          <div id="smsPreviewPanel" class="preview-card sms-card">
+            <div class="sms-top">
+              <div class="sms-sender">+91-DPH-ALERT (Kerala Health)</div>
+              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end">
+                <span class="sms-time">Just Now</span>
+                <span class="sms-badge">Hackathon Demo Mode</span>
+              </div>
+            </div>
+            <div id="smsMessage" class="sms-body"></div>
+            <div class="sms-meta">
+              <span id="smsMeta"></span>
+            </div>
+          </div>
+          <div id="whatsappPreviewPanel" class="preview-card whatsapp-card" hidden>
+            <div class="whatsapp-head">
+              <div class="whatsapp-title">Kerala Health Dept <span class="whatsapp-dot"></span></div>
+              <div class="whatsapp-sub">Official Outbreak Early Warning</div>
+            </div>
+            <div class="whatsapp-body">
+              <div id="whatsappMessage" class="whatsapp-bubble"></div>
+              <div class="whatsapp-footer">
+                <span id="whatsappTime">11:30 am</span>
+                <span class="whatsapp-check">✓✓ Delivered</span>
+              </div>
+              <div class="wa-actions">
+                <button class="wa-btn" type="button">View Guidelines</button>
+                <button class="wa-btn wa-btn-primary" type="button">Acknowledge Advisory</button>
+              </div>
+            </div>
+          </div>
+          <div class="dispatch-log">
+            <div class="dispatch-label">Session Dispatch Log</div>
+            <textarea id="dispatchLog" readonly></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="panel">        <div class="panel-h">&#x1F4C8; Seasonal Risk Pattern</div>
         <p id="seasonalWarning" style="font-size:.76rem;color:#475569;line-height:1.5;margin-bottom:8px"></p>
         <div class="chart-wrap"><canvas id="seasonalChart"></canvas></div>
       </div>
@@ -291,7 +370,99 @@ function updateDetail() {
       markers[currentDist].openPopup();
   }, 60);
 
+  updateCitizenAlert();
   updateChart();
+}
+
+// ── Citizen Alert Simulation ────────────────────────────────────────────────
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/\"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function shortenAction(text) {
+  const cleaned = String(text || '').replace(/\s+/g, ' ').trim();
+  if(cleaned.length <= 90) return cleaned;
+  return cleaned.slice(0, 87).trimEnd() + '...';
+}
+
+function getCurrentAlertContext() {
+  const d = DATA.warnings[currentWeek][currentDist];
+  const weekNumber = String(currentWeek).replace(/\D/g, '');
+  return {
+    district: currentDist,
+    status: d.status,
+    disease: d.disease !== '-' ? d.disease : 'Infectious Surveillance',
+    cases: d.cases > 0 ? d.cases : 0,
+    action: d.recommendation || 'Continue routine monitoring.',
+    weekNumber
+  };
+}
+
+function buildSmsMessage(ctx) {
+  return `[KERALA DPH ALERT] ${ctx.status.toUpperCase()} for ${ctx.district}. ${ctx.disease} (${ctx.cases} case(s)) in Week ${ctx.weekNumber}. Action: ${shortenAction(ctx.action)}. Helpline: 1056. Ref:#OBD-Week${ctx.weekNumber}`;
+}
+
+function buildWhatsAppMessage(ctx) {
+  return [
+    `⚠️ ${ctx.status.toUpperCase()} ADVISORY`,
+    `*District:* ${ctx.district}`,
+    `*Alert Level:* ${ctx.status}`,
+    `*Primary Trigger:* ${ctx.disease} (${ctx.cases} case(s))`,
+    `*Period:* Week ${ctx.weekNumber}`,
+    '',
+    `*Recommended Action:*`,
+    ctx.action,
+    '',
+    '_Generated by AI Outbreak Detection System (Malabar Network)_'
+  ].join('\n');
+}
+
+function renderWhatsAppBody(text) {
+  const lines = text.split('\n');
+  return lines.map(line => {
+    const trimmed = line.trim();
+    if(trimmed.startsWith('*') && trimmed.endsWith('*')) {
+      return `<div><strong>${escapeHtml(trimmed.slice(1, -1))}</strong></div>`;
+    }
+    if(trimmed.startsWith('_') && trimmed.endsWith('_')) {
+      return `<div><em>${escapeHtml(trimmed.slice(1, -1))}</em></div>`;
+    }
+    return `<div>${escapeHtml(trimmed || '&nbsp;')}</div>`;
+  }).join('');
+}
+
+function updateCitizenAlert() {
+  const ctx = getCurrentAlertContext();
+  const smsText = buildSmsMessage(ctx);
+  const waText = buildWhatsAppMessage(ctx);
+  const smsChars = smsText.length;
+  const smsSegments = Math.max(1, Math.ceil(smsChars / 153));
+
+  document.getElementById('smsMessage').textContent = smsText;
+  document.getElementById('smsMeta').textContent = `${smsChars} chars | ${smsSegments} SMS segment(s)`;
+  document.getElementById('whatsappMessage').innerHTML = renderWhatsAppBody(waText);
+  document.getElementById('whatsappTime').textContent = new Date().toLocaleTimeString([], {hour:'numeric', minute:'2-digit'});
+}
+
+function setActiveAlertTab(tabName) {
+  currentAlertTab = tabName;
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-tab') === tabName));
+  document.getElementById('smsPreviewPanel').hidden = tabName !== 'sms';
+  document.getElementById('whatsappPreviewPanel').hidden = tabName !== 'whatsapp';
+}
+
+function appendDispatchLog() {
+  const ctx = getCurrentAlertContext();
+  const log = document.getElementById('dispatchLog');
+  const stamp = new Date().toLocaleString();
+  const entry = `${stamp} | ${ctx.district} | ${ctx.status}`;
+  const defaultText = 'No alerts dispatched in this session yet. Click "Send Alert Broadcast" above to test.';
+  log.value = (log.value.trim() === defaultText ? '' : `${log.value}\n`) + entry;
 }
 
 // ── Chart ─────────────────────────────────────────────────────────────────────
@@ -340,7 +511,12 @@ function updateChart() {
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
 window.addEventListener('load', () => {
-  setTimeout(() => { map.invalidateSize(); updateMap(); updateDetail(); }, 300);
+  document.getElementById('dispatchLog').value = 'No alerts dispatched in this session yet. Click "Send Alert Broadcast" above to test.';
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => setActiveAlertTab(btn.getAttribute('data-tab')));
+  });
+  document.getElementById('sendAlertBtn').addEventListener('click', appendDispatchLog);
+  setTimeout(() => { map.invalidateSize(); updateMap(); updateDetail(); setActiveAlertTab('sms'); }, 300);
 });
 </script>
 </body>
