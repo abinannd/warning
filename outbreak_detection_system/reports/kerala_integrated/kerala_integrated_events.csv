@@ -1,0 +1,221 @@
+District,Disease,Start,End,Peak Cases,Peak Z,max_risk,Event ID,Duration,Tier,Highest Risk,Region
+Alappuzha,Dengue,2023-07-08,2023-07-09,1,2.165,1,KL-0001,2,Watch-Tier Event,Medium,South Kerala
+Alappuzha,Influenza,2023-10-14,2023-10-18,1,2.165,1,KL-0002,5,Watch-Tier Event,Medium,South Kerala
+Alappuzha,Leptospirosis,2022-06-04,2022-06-05,1,2.0132028309884555,1,KL-0003,2,Watch-Tier Event,Medium,South Kerala
+Alappuzha,Leptospirosis,2024-06-08,2024-06-10,2,2.553,2,KL-0004,3,Confirmed-Tier Event,High,South Kerala
+Alappuzha,Leptospirosis,2024-06-12,2024-06-13,1,2.093472449523183,1,KL-0005,2,Watch-Tier Event,Medium,South Kerala
+Alappuzha,Rabies,2023-04-17,2023-04-18,1,2.165,1,KL-0006,2,Watch-Tier Event,Medium,South Kerala
+Alappuzha,Rabies,2024-11-22,2024-11-27,1,2.947268999908746,2,KL-0007,6,Watch-Tier Event,High,South Kerala
+Idukki,Leptospirosis,2020-07-26,2020-07-29,2,2.9472689999087502,2,KL-0008,4,Confirmed-Tier Event,High,South Kerala
+Idukki,Leptospirosis,2020-07-31,2020-08-02,2,2.949576240750525,2,KL-0009,3,Confirmed-Tier Event,High,South Kerala
+Idukki,Leptospirosis,2022-07-21,2022-07-23,0,2.165,1,KL-0010,3,Watch-Tier Event,Medium,South Kerala
+Idukki,Leptospirosis,2022-10-19,2022-10-22,1,3.729729796344687,3,KL-0011,4,Watch-Tier Event,Critical,South Kerala
+Idukki,Malaria,2024-12-11,2024-12-16,1,2.165,1,KL-0012,6,Watch-Tier Event,Medium,South Kerala
+Kannur,Chickenpox,2018-12-17,2018-12-21,1,3.115691188815444,3,KL-0013,5,Watch-Tier Event,Critical,North Kerala
+Kannur,Chickenpox,2020-05-14,2020-05-17,2,2.506657801402763,2,KL-0014,4,Confirmed-Tier Event,High,North Kerala
+Kannur,Chickenpox,2021-02-28,2021-03-01,3,3.116,3,KL-0015,2,Confirmed-Tier Event,Critical,North Kerala
+Kannur,Chikungunya,2018-04-13,2018-04-17,1,2.552614467945186,2,KL-0016,5,Watch-Tier Event,High,North Kerala
+Kannur,Chikungunya,2020-10-16,2020-10-19,1,2.0934724495231865,1,KL-0017,4,Watch-Tier Event,Medium,North Kerala
+Kannur,Chikungunya,2022-10-14,2022-10-18,2,2.947268999908752,2,KL-0018,5,Confirmed-Tier Event,High,North Kerala
+Kannur,Common Cold,2021-03-15,2021-03-17,1,2.9472689999087587,2,KL-0019,3,Watch-Tier Event,High,North Kerala
+Kannur,Common Cold,2023-04-22,2023-04-25,2,3.116,3,KL-0020,4,Confirmed-Tier Event,Critical,North Kerala
+Kannur,Dengue,2018-09-13,2018-09-14,0,2.0934724495231882,1,KL-0021,2,Watch-Tier Event,Medium,North Kerala
+Kannur,Dengue,2019-01-27,2019-01-29,1,2.165,1,KL-0022,3,Watch-Tier Event,Medium,North Kerala
+Kannur,Dengue,2025-12-13,2025-12-14,1,3.1156911888154553,3,KL-0023,2,Watch-Tier Event,Critical,North Kerala
+Kannur,Influenza,2020-07-01,2020-07-02,1,2.165,1,KL-0024,2,Watch-Tier Event,Medium,North Kerala
+Kannur,Influenza,2020-08-11,2020-08-12,1,2.318,1,KL-0025,2,Watch-Tier Event,Medium,North Kerala
+Kannur,Influenza,2022-02-05,2022-02-10,2,2.165,1,KL-0026,6,Confirmed-Tier Event,Medium,North Kerala
+Kannur,Influenza,2022-04-19,2022-04-21,1,2.9472689999087582,2,KL-0027,3,Watch-Tier Event,High,North Kerala
+Kannur,Influenza,2022-07-15,2022-07-16,1,2.553,2,KL-0028,2,Watch-Tier Event,High,North Kerala
+Kannur,Malaria,2019-04-17,2019-04-19,1,2.165,1,KL-0029,3,Watch-Tier Event,Medium,North Kerala
+Kannur,Malaria,2019-08-11,2019-08-14,2,2.552614467945181,2,KL-0030,4,Confirmed-Tier Event,High,North Kerala
+Kannur,Malaria,2020-12-06,2020-12-07,1,2.013202830988453,1,KL-0031,2,Watch-Tier Event,Medium,North Kerala
+Kannur,Malaria,2021-09-15,2021-09-17,2,2.013202830988453,1,KL-0032,3,Confirmed-Tier Event,Medium,North Kerala
+Kannur,Malaria,2022-01-06,2022-01-08,2,2.947268999908747,2,KL-0033,3,Confirmed-Tier Event,High,North Kerala
+Kannur,Malaria,2022-07-15,2022-07-16,1,2.0132028309884538,1,KL-0034,2,Watch-Tier Event,Medium,North Kerala
+Kannur,Malaria,2023-06-12,2023-06-16,1,3.7297297963447043,3,KL-0035,5,Watch-Tier Event,Critical,North Kerala
+Kannur,Malaria,2025-07-20,2025-07-23,1,2.947,2,KL-0036,4,Watch-Tier Event,High,North Kerala
+Kannur,Typhoid,2019-09-20,2019-09-21,2,2.9495762407505266,2,KL-0037,2,Confirmed-Tier Event,High,North Kerala
+Kannur,Typhoid,2021-09-09,2021-09-10,1,2.165,1,KL-0038,2,Watch-Tier Event,Medium,North Kerala
+Kannur,Typhoid,2025-04-09,2025-04-10,0,2.165,1,KL-0039,2,Watch-Tier Event,Medium,North Kerala
+Kannur,Viral Fever,2019-04-22,2019-04-25,1,2.947268999908752,2,KL-0040,4,Watch-Tier Event,High,North Kerala
+Kannur,Viral Fever,2020-04-24,2020-04-25,1,2.9472689999087547,2,KL-0041,2,Watch-Tier Event,High,North Kerala
+Kannur,Viral Fever,2020-07-05,2020-07-07,4,2.553,2,KL-0042,3,Confirmed-Tier Event,High,North Kerala
+Kannur,Viral Fever,2022-08-29,2022-08-31,0,2.165,1,KL-0043,3,Watch-Tier Event,Medium,North Kerala
+Kannur,Viral Fever,2025-04-10,2025-04-11,2,2.093472449523186,1,KL-0044,2,Confirmed-Tier Event,Medium,North Kerala
+Kannur,Viral Fever,2025-07-24,2025-07-28,1,2.947268999908751,2,KL-0045,5,Watch-Tier Event,High,North Kerala
+Kasaragod,Chickenpox,2019-06-28,2019-06-29,1,2.553,2,KL-0046,2,Watch-Tier Event,High,North Kerala
+Kasaragod,Chickenpox,2020-03-25,2020-03-26,1,2.165,1,KL-0047,2,Watch-Tier Event,Medium,North Kerala
+Kasaragod,Chikungunya,2021-09-19,2021-09-21,1,2.947268999908752,2,KL-0048,3,Watch-Tier Event,High,North Kerala
+Kasaragod,Chikungunya,2023-05-28,2023-05-31,1,2.165,1,KL-0049,4,Watch-Tier Event,Medium,North Kerala
+Kasaragod,Chikungunya,2023-10-04,2023-10-08,1,2.947268999908752,2,KL-0050,5,Watch-Tier Event,High,North Kerala
+Kasaragod,Common Cold,2019-01-07,2019-01-08,1,2.165,1,KL-0051,2,Watch-Tier Event,Medium,North Kerala
+Kasaragod,Common Cold,2020-11-16,2020-11-17,2,2.947268999908748,2,KL-0052,2,Confirmed-Tier Event,High,North Kerala
+Kasaragod,Common Cold,2021-09-20,2021-09-21,1,2.9472689999087494,2,KL-0053,2,Watch-Tier Event,High,North Kerala
+Kasaragod,Common Cold,2022-10-11,2022-10-12,1,2.0132028309884538,1,KL-0054,2,Watch-Tier Event,Medium,North Kerala
+Kasaragod,Common Cold,2023-10-15,2023-10-16,1,2.165,1,KL-0055,2,Watch-Tier Event,Medium,North Kerala
+Kasaragod,Dengue,2021-06-03,2021-06-09,2,2.9472689999087547,2,KL-0056,7,Confirmed-Tier Event,High,North Kerala
+Kasaragod,Dengue,2023-07-09,2023-07-10,1,2.165,1,KL-0057,2,Watch-Tier Event,Medium,North Kerala
+Kasaragod,Dengue,2023-07-19,2023-07-21,1,2.013202830988454,1,KL-0058,3,Watch-Tier Event,Medium,North Kerala
+Kasaragod,Influenza,2018-07-28,2018-07-31,1,2.553,2,KL-0059,4,Watch-Tier Event,High,North Kerala
+Kasaragod,Influenza,2019-04-06,2019-04-08,0,2.165,1,KL-0060,3,Watch-Tier Event,Medium,North Kerala
+Kasaragod,Influenza,2019-12-24,2019-12-29,2,3.729729796344706,3,KL-0061,6,Confirmed-Tier Event,Critical,North Kerala
+Kasaragod,Influenza,2021-08-25,2021-08-26,1,2.165,1,KL-0062,2,Watch-Tier Event,Medium,North Kerala
+Kasaragod,Influenza,2023-05-15,2023-05-18,1,2.165,1,KL-0063,4,Watch-Tier Event,Medium,North Kerala
+Kasaragod,Influenza,2023-09-12,2023-09-17,2,2.165,1,KL-0064,6,Confirmed-Tier Event,Medium,North Kerala
+Kasaragod,Typhoid,2018-03-21,2018-03-26,2,3.6787679096857047,3,KL-0065,6,Confirmed-Tier Event,Critical,North Kerala
+Kasaragod,Viral Fever,2018-05-16,2018-05-17,1,2.165,1,KL-0066,2,Watch-Tier Event,Medium,North Kerala
+Kasaragod,Viral Fever,2021-07-12,2021-07-13,1,2.165,1,KL-0067,2,Watch-Tier Event,Medium,North Kerala
+Kasaragod,Viral Fever,2022-11-15,2022-11-17,1,2.165,1,KL-0068,3,Watch-Tier Event,Medium,North Kerala
+Kasaragod,Viral Fever,2023-07-15,2023-07-20,2,2.947268999908757,2,KL-0069,6,Confirmed-Tier Event,High,North Kerala
+Kasaragod,Viral Fever,2025-08-17,2025-08-18,1,2.093472449523188,1,KL-0070,2,Watch-Tier Event,Medium,North Kerala
+Kollam,Dengue,2020-09-04,2020-09-08,4,2.507,2,KL-0071,5,Confirmed-Tier Event,High,South Kerala
+Kollam,Dengue,2021-09-08,2021-09-10,1,2.165,1,KL-0072,3,Watch-Tier Event,Medium,South Kerala
+Kollam,Dengue,2022-06-05,2022-06-10,2,2.165,1,KL-0073,6,Confirmed-Tier Event,Medium,South Kerala
+Kollam,Dengue,2024-06-02,2024-06-08,3,5.294651389216372,3,KL-0074,7,Confirmed-Tier Event,Critical,South Kerala
+Kollam,Influenza,2024-03-10,2024-03-13,1,2.947268999908751,2,KL-0075,4,Watch-Tier Event,High,South Kerala
+Kollam,Influenza,2024-12-22,2024-12-23,1,2.9472689999087502,2,KL-0076,2,Watch-Tier Event,High,South Kerala
+Kollam,Leptospirosis,2024-06-04,2024-06-07,4,2.8572059813396233,2,KL-0077,4,Confirmed-Tier Event,High,South Kerala
+Kollam,Rabies,2023-12-10,2023-12-13,1,2.165,1,KL-0078,4,Watch-Tier Event,Medium,South Kerala
+Kottayam,Dengue,2024-07-12,2024-07-17,2,3.7297297963447065,3,KL-0079,6,Confirmed-Tier Event,Critical,South Kerala
+Kottayam,Leptospirosis,2024-06-06,2024-06-10,1,3.1156911888153282,3,KL-0080,5,Watch-Tier Event,Critical,South Kerala
+Kozhikode,Chickenpox,2020-10-27,2020-10-28,1,2.165,1,KL-0081,2,Watch-Tier Event,Medium,North Kerala
+Kozhikode,Chickenpox,2022-05-20,2022-05-22,0,2.9472689999087303,2,KL-0082,3,Watch-Tier Event,High,North Kerala
+Kozhikode,Chickenpox,2023-04-13,2023-04-16,1,2.165,1,KL-0083,4,Watch-Tier Event,Medium,North Kerala
+Kozhikode,Chickenpox,2025-07-08,2025-07-10,1,2.4813895358694813,1,KL-0084,3,Watch-Tier Event,Medium,North Kerala
+Kozhikode,Chikungunya,2020-06-23,2020-06-24,1,2.165,1,KL-0085,2,Watch-Tier Event,Medium,North Kerala
+Kozhikode,Chikungunya,2021-10-28,2021-10-29,1,2.947,2,KL-0086,2,Watch-Tier Event,High,North Kerala
+Kozhikode,Chikungunya,2022-01-11,2022-01-12,1,2.013202830988453,1,KL-0087,2,Watch-Tier Event,Medium,North Kerala
+Kozhikode,Common Cold,2019-08-12,2019-08-13,1,2.553,2,KL-0088,2,Watch-Tier Event,High,North Kerala
+Kozhikode,Common Cold,2020-07-11,2020-07-13,1,2.94726899990876,2,KL-0089,3,Watch-Tier Event,High,North Kerala
+Kozhikode,Common Cold,2021-08-11,2021-08-12,2,2.093472449523189,1,KL-0090,2,Confirmed-Tier Event,Medium,North Kerala
+Kozhikode,Common Cold,2021-09-27,2021-09-30,2,2.9472689999087636,2,KL-0091,4,Confirmed-Tier Event,High,North Kerala
+Kozhikode,Common Cold,2025-04-17,2025-04-20,1,2.165,1,KL-0092,4,Watch-Tier Event,Medium,North Kerala
+Kozhikode,Dengue,2018-07-10,2018-07-11,1,2.093472449523186,1,KL-0093,2,Watch-Tier Event,Medium,North Kerala
+Kozhikode,Dengue,2025-07-08,2025-07-10,1,2.165,1,KL-0094,3,Watch-Tier Event,Medium,North Kerala
+Kozhikode,Influenza,2018-07-21,2018-07-26,2,2.165,1,KL-0095,6,Confirmed-Tier Event,Medium,North Kerala
+Kozhikode,Influenza,2019-07-12,2019-07-15,1,2.9472689999087556,2,KL-0096,4,Watch-Tier Event,High,North Kerala
+Kozhikode,Influenza,2020-08-27,2020-08-29,2,3.116,3,KL-0097,3,Confirmed-Tier Event,Critical,North Kerala
+Kozhikode,Influenza,2021-10-25,2021-10-28,1,2.165,1,KL-0098,4,Watch-Tier Event,Medium,North Kerala
+Kozhikode,Influenza,2022-02-28,2022-03-02,1,2.165,1,KL-0099,3,Watch-Tier Event,Medium,North Kerala
+Kozhikode,Influenza,2025-04-25,2025-04-26,1,2.165,1,KL-0100,2,Watch-Tier Event,Medium,North Kerala
+Kozhikode,Influenza,2025-04-30,2025-05-01,0,2.947,2,KL-0101,2,Watch-Tier Event,High,North Kerala
+Kozhikode,Malaria,2018-07-23,2018-07-27,1,2.9495762407505266,2,KL-0102,5,Watch-Tier Event,High,North Kerala
+Kozhikode,Malaria,2021-09-19,2021-09-20,1,2.093,1,KL-0103,2,Watch-Tier Event,Medium,North Kerala
+Kozhikode,Malaria,2022-06-18,2022-06-21,1,2.165,1,KL-0104,4,Watch-Tier Event,Medium,North Kerala
+Kozhikode,Malaria,2022-12-15,2022-12-16,1,2.165,1,KL-0105,2,Watch-Tier Event,Medium,North Kerala
+Kozhikode,Malaria,2023-06-22,2023-06-23,2,2.013202830988453,1,KL-0106,2,Confirmed-Tier Event,Medium,North Kerala
+Kozhikode,Malaria,2025-02-21,2025-02-22,0,2.165,1,KL-0107,2,Watch-Tier Event,Medium,North Kerala
+Kozhikode,Malaria,2025-04-26,2025-04-27,1,2.165,1,KL-0108,2,Watch-Tier Event,Medium,North Kerala
+Kozhikode,Typhoid,2019-03-14,2019-03-16,1,2.947268999908754,2,KL-0109,3,Watch-Tier Event,High,North Kerala
+Kozhikode,Typhoid,2021-01-10,2021-01-13,2,2.553,2,KL-0110,4,Confirmed-Tier Event,High,North Kerala
+Kozhikode,Typhoid,2022-06-23,2022-06-28,1,2.947268999908752,2,KL-0111,6,Watch-Tier Event,High,North Kerala
+Kozhikode,Viral Fever,2018-02-12,2018-02-14,1,2.165,1,KL-0112,3,Watch-Tier Event,Medium,North Kerala
+Kozhikode,Viral Fever,2019-10-18,2019-10-20,1,2.165,1,KL-0113,3,Watch-Tier Event,Medium,North Kerala
+Kozhikode,Viral Fever,2022-05-20,2022-05-21,1,2.165,1,KL-0114,2,Watch-Tier Event,Medium,North Kerala
+Kozhikode,Viral Fever,2023-01-20,2023-01-23,1,2.4813895358694906,1,KL-0115,4,Watch-Tier Event,Medium,North Kerala
+Kozhikode,Viral Fever,2023-11-05,2023-11-09,1,2.9472689999087565,2,KL-0116,5,Watch-Tier Event,High,North Kerala
+Kozhikode,Viral Fever,2025-01-26,2025-01-29,2,3.7297297963447154,3,KL-0117,4,Confirmed-Tier Event,Critical,North Kerala
+Malappuram,Chickenpox,2020-07-23,2020-07-25,1,2.093472449523187,1,KL-0118,3,Watch-Tier Event,Medium,North Kerala
+Malappuram,Chickenpox,2022-12-12,2022-12-17,1,2.9472689999087467,2,KL-0119,6,Watch-Tier Event,High,North Kerala
+Malappuram,Chikungunya,2018-07-17,2018-07-18,1,2.165,1,KL-0120,2,Watch-Tier Event,Medium,North Kerala
+Malappuram,Chikungunya,2023-05-22,2023-05-23,2,2.553,2,KL-0121,2,Confirmed-Tier Event,High,North Kerala
+Malappuram,Chikungunya,2025-01-28,2025-01-30,0,2.165,1,KL-0122,3,Watch-Tier Event,Medium,North Kerala
+Malappuram,Common Cold,2019-03-14,2019-03-18,1,2.9472689999087547,2,KL-0123,5,Watch-Tier Event,High,North Kerala
+Malappuram,Dengue,2018-09-13,2018-09-15,2,2.947268999908751,2,KL-0124,3,Confirmed-Tier Event,High,North Kerala
+Malappuram,Dengue,2022-02-21,2022-02-22,1,2.165,1,KL-0125,2,Watch-Tier Event,Medium,North Kerala
+Malappuram,Dengue,2022-07-06,2022-07-10,1,2.9472689999087405,2,KL-0126,5,Watch-Tier Event,High,North Kerala
+Malappuram,Dengue,2025-12-22,2025-12-26,1,2.947268999908744,2,KL-0127,5,Watch-Tier Event,High,North Kerala
+Malappuram,Influenza,2019-07-06,2019-07-07,1,2.165,1,KL-0128,2,Watch-Tier Event,Medium,North Kerala
+Malappuram,Influenza,2022-02-15,2022-02-17,1,2.165,1,KL-0129,3,Watch-Tier Event,Medium,North Kerala
+Malappuram,Influenza,2022-06-11,2022-06-12,1,2.165,1,KL-0130,2,Watch-Tier Event,Medium,North Kerala
+Malappuram,Influenza,2023-11-08,2023-11-09,2,2.553,2,KL-0131,2,Confirmed-Tier Event,High,North Kerala
+Malappuram,Influenza,2025-03-20,2025-03-23,0,2.165,1,KL-0132,4,Watch-Tier Event,Medium,North Kerala
+Malappuram,Influenza,2025-05-17,2025-05-18,0,2.5526144679451828,2,KL-0133,2,Watch-Tier Event,High,North Kerala
+Malappuram,Influenza,2025-10-17,2025-10-18,1,2.165,1,KL-0134,2,Watch-Tier Event,Medium,North Kerala
+Malappuram,Malaria,2019-08-11,2019-08-14,1,2.9472689999087556,2,KL-0135,4,Watch-Tier Event,High,North Kerala
+Malappuram,Malaria,2020-08-15,2020-08-16,1,2.9472689999087587,2,KL-0136,2,Watch-Tier Event,High,North Kerala
+Malappuram,Typhoid,2018-10-19,2018-10-24,1,3.7297297963447065,3,KL-0137,6,Watch-Tier Event,Critical,North Kerala
+Malappuram,Typhoid,2018-12-08,2018-12-11,1,2.48138953586949,1,KL-0138,4,Watch-Tier Event,Medium,North Kerala
+Malappuram,Typhoid,2019-07-20,2019-07-22,2,2.165,1,KL-0139,3,Confirmed-Tier Event,Medium,North Kerala
+Malappuram,Typhoid,2020-11-16,2020-11-19,1,2.165,1,KL-0140,4,Watch-Tier Event,Medium,North Kerala
+Malappuram,Typhoid,2022-01-20,2022-01-21,1,2.553,2,KL-0141,2,Watch-Tier Event,High,North Kerala
+Malappuram,Typhoid,2022-04-09,2022-04-11,1,2.947268999908756,2,KL-0142,3,Watch-Tier Event,High,North Kerala
+Malappuram,Typhoid,2022-07-26,2022-07-29,2,3.115691188815448,3,KL-0143,4,Confirmed-Tier Event,Critical,North Kerala
+Malappuram,Viral Fever,2019-03-23,2019-03-26,1,2.165,1,KL-0144,4,Watch-Tier Event,Medium,North Kerala
+Malappuram,Viral Fever,2020-04-06,2020-04-07,2,2.013202830988455,1,KL-0145,2,Confirmed-Tier Event,Medium,North Kerala
+Malappuram,Viral Fever,2020-10-19,2020-10-20,1,2.165,1,KL-0146,2,Watch-Tier Event,Medium,North Kerala
+Malappuram,Viral Fever,2021-07-10,2021-07-12,1,2.165,1,KL-0147,3,Watch-Tier Event,Medium,North Kerala
+Malappuram,Viral Fever,2021-10-25,2021-10-28,1,2.165,1,KL-0148,4,Watch-Tier Event,Medium,North Kerala
+Malappuram,Viral Fever,2025-05-28,2025-05-30,1,2.165,1,KL-0149,3,Watch-Tier Event,Medium,North Kerala
+Palakkad,Chickenpox,2018-04-17,2018-04-18,1,2.165,1,KL-0150,2,Watch-Tier Event,Medium,North Kerala
+Palakkad,Chickenpox,2020-09-10,2020-09-14,2,2.9472689999087494,2,KL-0151,5,Confirmed-Tier Event,High,North Kerala
+Palakkad,Chickenpox,2020-11-28,2020-11-30,1,2.165,1,KL-0152,3,Watch-Tier Event,Medium,North Kerala
+Palakkad,Chickenpox,2021-07-17,2021-07-18,1,2.165,1,KL-0153,2,Watch-Tier Event,Medium,North Kerala
+Palakkad,Chikungunya,2018-05-18,2018-05-20,1,2.165,1,KL-0154,3,Watch-Tier Event,Medium,North Kerala
+Palakkad,Chikungunya,2018-12-27,2018-12-28,2,2.947,2,KL-0155,2,Confirmed-Tier Event,High,North Kerala
+Palakkad,Chikungunya,2019-05-19,2019-05-21,1,2.165,1,KL-0156,3,Watch-Tier Event,Medium,North Kerala
+Palakkad,Chikungunya,2019-07-13,2019-07-15,3,3.7297297963446994,3,KL-0157,3,Confirmed-Tier Event,Critical,North Kerala
+Palakkad,Chikungunya,2020-10-21,2020-10-23,1,2.165,1,KL-0158,3,Watch-Tier Event,Medium,North Kerala
+Palakkad,Chikungunya,2020-10-25,2020-10-27,0,2.9472689999087485,2,KL-0159,3,Watch-Tier Event,High,North Kerala
+Palakkad,Chikungunya,2025-06-05,2025-06-09,2,2.9472689999087485,2,KL-0160,5,Confirmed-Tier Event,High,North Kerala
+Palakkad,Chikungunya,2025-12-12,2025-12-18,3,2.947268999908747,2,KL-0161,7,Confirmed-Tier Event,High,North Kerala
+Palakkad,Common Cold,2022-12-02,2022-12-03,1,2.165,1,KL-0162,2,Watch-Tier Event,Medium,North Kerala
+Palakkad,Common Cold,2023-09-15,2023-09-17,1,2.165,1,KL-0163,3,Watch-Tier Event,Medium,North Kerala
+Palakkad,Common Cold,2023-12-28,2023-12-29,1,2.0132028309884538,1,KL-0164,2,Watch-Tier Event,Medium,North Kerala
+Palakkad,Common Cold,2025-10-02,2025-10-04,1,2.9472689999087534,2,KL-0165,3,Watch-Tier Event,High,North Kerala
+Palakkad,Dengue,2019-12-12,2019-12-13,1,2.165,1,KL-0166,2,Watch-Tier Event,Medium,North Kerala
+Palakkad,Dengue,2020-08-31,2020-09-01,0,2.165,1,KL-0167,2,Watch-Tier Event,Medium,North Kerala
+Palakkad,Dengue,2022-06-09,2022-06-13,2,2.165,1,KL-0168,5,Confirmed-Tier Event,Medium,North Kerala
+Palakkad,Influenza,2020-08-11,2020-08-12,1,2.947268999908748,2,KL-0169,2,Watch-Tier Event,High,North Kerala
+Palakkad,Influenza,2023-12-24,2023-12-27,1,2.165,1,KL-0170,4,Watch-Tier Event,Medium,North Kerala
+Palakkad,Malaria,2020-03-28,2020-03-30,1,2.165,1,KL-0171,3,Watch-Tier Event,Medium,North Kerala
+Palakkad,Malaria,2021-09-11,2021-09-16,2,2.165,1,KL-0172,6,Confirmed-Tier Event,Medium,North Kerala
+Palakkad,Malaria,2021-12-26,2021-12-28,2,2.165,1,KL-0173,3,Confirmed-Tier Event,Medium,North Kerala
+Palakkad,Malaria,2025-07-28,2025-07-29,1,2.165,1,KL-0174,2,Watch-Tier Event,Medium,North Kerala
+Palakkad,Typhoid,2020-10-06,2020-10-11,2,2.9472689999087516,2,KL-0175,6,Confirmed-Tier Event,High,North Kerala
+Palakkad,Typhoid,2022-08-01,2022-08-02,1,2.165,1,KL-0176,2,Watch-Tier Event,Medium,North Kerala
+Palakkad,Typhoid,2023-03-11,2023-03-14,2,2.165,1,KL-0177,4,Confirmed-Tier Event,Medium,North Kerala
+Palakkad,Typhoid,2023-08-07,2023-08-12,1,2.165,1,KL-0178,6,Watch-Tier Event,Medium,North Kerala
+Palakkad,Viral Fever,2018-06-21,2018-06-22,2,2.165,1,KL-0179,2,Confirmed-Tier Event,Medium,North Kerala
+Palakkad,Viral Fever,2025-05-23,2025-05-25,1,2.165,1,KL-0180,3,Watch-Tier Event,Medium,North Kerala
+Pathanamthitta,Dengue,2023-07-09,2023-07-12,1,2.165,1,KL-0181,4,Watch-Tier Event,Medium,South Kerala
+Pathanamthitta,Leptospirosis,2020-06-07,2020-06-11,3,3.115691188815444,3,KL-0182,5,Confirmed-Tier Event,Critical,South Kerala
+Pathanamthitta,Leptospirosis,2024-06-07,2024-06-08,3,2.553,2,KL-0183,2,Confirmed-Tier Event,High,South Kerala
+Thiruvananthapuram,Acute Encephalitis Syndrome,2023-09-29,2023-10-04,1,2.165,1,KL-0184,6,Watch-Tier Event,Medium,South Kerala
+Thiruvananthapuram,Dengue,2024-02-07,2024-02-09,1,2.165,1,KL-0185,3,Watch-Tier Event,Medium,South Kerala
+Thiruvananthapuram,Dengue,2024-05-12,2024-05-17,1,2.947268999908752,2,KL-0186,6,Watch-Tier Event,High,South Kerala
+Thiruvananthapuram,Influenza,2024-05-14,2024-05-15,1,2.553,2,KL-0187,2,Watch-Tier Event,High,South Kerala
+Thiruvananthapuram,Leptospirosis,2021-06-04,2021-06-11,7,3.829395366878068,3,KL-0188,8,Confirmed-Tier Event,Critical,South Kerala
+Thiruvananthapuram,Leptospirosis,2022-06-14,2022-06-17,5,2.728460975711031,2,KL-0189,4,Confirmed-Tier Event,High,South Kerala
+Thiruvananthapuram,Leptospirosis,2024-06-05,2024-06-13,7,4.873352304340159,3,KL-0190,9,Confirmed-Tier Event,Critical,South Kerala
+Thiruvananthapuram,Rabies,2024-09-29,2024-10-01,1,2.165,1,KL-0191,3,Watch-Tier Event,Medium,South Kerala
+Thiruvananthapuram,Scrub Typhus,2020-06-10,2020-06-13,1,2.947268999908751,2,KL-0192,4,Watch-Tier Event,High,South Kerala
+Thiruvananthapuram,Scrub Typhus,2020-09-21,2020-09-24,1,2.165,1,KL-0193,4,Watch-Tier Event,Medium,South Kerala
+Thiruvananthapuram,Scrub Typhus,2023-05-08,2023-05-14,3,2.165,1,KL-0194,7,Confirmed-Tier Event,Medium,South Kerala
+Thiruvananthapuram,Scrub Typhus,2024-06-02,2024-06-03,3,2.947268999908759,2,KL-0195,2,Confirmed-Tier Event,High,South Kerala
+Wayanad,Chickenpox,2020-05-14,2020-05-16,1,2.165,1,KL-0196,3,Watch-Tier Event,Medium,North Kerala
+Wayanad,Chickenpox,2021-08-06,2021-08-07,1,2.165,1,KL-0197,2,Watch-Tier Event,Medium,North Kerala
+Wayanad,Chickenpox,2022-05-13,2022-05-14,1,2.165,1,KL-0198,2,Watch-Tier Event,Medium,North Kerala
+Wayanad,Chickenpox,2022-11-27,2022-12-02,2,2.165,1,KL-0199,6,Confirmed-Tier Event,Medium,North Kerala
+Wayanad,Chickenpox,2023-08-14,2023-08-16,1,2.165,1,KL-0200,3,Watch-Tier Event,Medium,North Kerala
+Wayanad,Chikungunya,2018-05-09,2018-05-13,1,2.165,1,KL-0201,5,Watch-Tier Event,Medium,North Kerala
+Wayanad,Chikungunya,2019-09-23,2019-09-24,2,2.947,2,KL-0202,2,Confirmed-Tier Event,High,North Kerala
+Wayanad,Chikungunya,2022-02-25,2022-02-26,1,2.165,1,KL-0203,2,Watch-Tier Event,Medium,North Kerala
+Wayanad,Common Cold,2018-04-07,2018-04-08,2,2.947,2,KL-0204,2,Confirmed-Tier Event,High,North Kerala
+Wayanad,Common Cold,2020-02-05,2020-02-07,1,2.553,2,KL-0205,3,Watch-Tier Event,High,North Kerala
+Wayanad,Common Cold,2020-02-09,2020-02-10,1,2.0132028309884524,1,KL-0206,2,Watch-Tier Event,Medium,North Kerala
+Wayanad,Common Cold,2025-02-06,2025-02-07,2,2.165,1,KL-0207,2,Confirmed-Tier Event,Medium,North Kerala
+Wayanad,Common Cold,2025-05-19,2025-05-20,1,2.165,1,KL-0208,2,Watch-Tier Event,Medium,North Kerala
+Wayanad,Dengue,2023-02-21,2023-02-22,0,2.165,1,KL-0209,2,Watch-Tier Event,Medium,North Kerala
+Wayanad,Influenza,2019-05-28,2019-05-30,1,2.165,1,KL-0210,3,Watch-Tier Event,Medium,North Kerala
+Wayanad,Influenza,2022-04-02,2022-04-03,1,2.947,2,KL-0211,2,Watch-Tier Event,High,North Kerala
+Wayanad,Influenza,2025-05-15,2025-05-17,1,2.165,1,KL-0212,3,Watch-Tier Event,Medium,North Kerala
+Wayanad,Malaria,2018-05-04,2018-05-08,1,2.165,1,KL-0213,5,Watch-Tier Event,Medium,North Kerala
+Wayanad,Malaria,2018-11-09,2018-11-13,1,2.947268999908751,2,KL-0214,5,Watch-Tier Event,High,North Kerala
+Wayanad,Malaria,2020-01-19,2020-01-20,1,2.165,1,KL-0215,2,Watch-Tier Event,Medium,North Kerala
+Wayanad,Malaria,2020-03-11,2020-03-14,1,2.165,1,KL-0216,4,Watch-Tier Event,Medium,North Kerala
+Wayanad,Malaria,2025-02-05,2025-02-08,1,2.165,1,KL-0217,4,Watch-Tier Event,Medium,North Kerala
+Wayanad,Typhoid,2023-09-22,2023-09-25,3,2.506657801402763,2,KL-0218,4,Confirmed-Tier Event,High,North Kerala
+Wayanad,Viral Fever,2018-04-09,2018-04-10,1,2.165,1,KL-0219,2,Watch-Tier Event,Medium,North Kerala
+Wayanad,Viral Fever,2022-08-27,2022-08-28,1,2.165,1,KL-0220,2,Watch-Tier Event,Medium,North Kerala

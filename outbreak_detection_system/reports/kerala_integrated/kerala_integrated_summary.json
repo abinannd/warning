@@ -1,0 +1,16 @@
+{
+    "total_rows_combined": 175072,
+    "total_districts": 12,
+    "total_diseases": 21,
+    "date_range": [
+        "2018-01-01",
+        "2025-12-28"
+    ],
+    "total_events": 220,
+    "confirmed_tier": 61,
+    "watch_tier": 159,
+    "max_z_score": 5.2947,
+    "top_disease": "Influenza",
+    "north_kerala_events": 183,
+    "south_kerala_events": 37
+}
